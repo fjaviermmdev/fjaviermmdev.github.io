@@ -1,0 +1,462 @@
+---
+// Hero section component
+import { Image } from 'astro:assets';
+---
+
+<section id="inicio" class="hero">
+	<div class="hero-background">
+		<div class="gradient-orb orb-1"></div>
+		<div class="gradient-orb orb-2"></div>
+		<div class="gradient-orb orb-3"></div>
+	</div>
+	
+	<div class="container">
+		<div class="hero-content">
+			<div class="hero-text">
+				<h1 class="hero-title fade-in">
+					<span data-en="Hi, I'm" data-es="Hola, soy">Hola, soy</span>
+					<span class="gradient-text name-text">Francisco Javier Martínez Martínez</span>
+				</h1>
+				
+				<h2 class="hero-subtitle slide-in-left">
+					<span data-en="Computer engineer & backend developer" data-es="Ingeniero informático y desarrollador backend">Ingeniero informático y desarrollador backend</span>
+				</h2>
+				
+				<p class="hero-description slide-in-left">
+					<span data-en="Computer engineer specialized in Information Technologies. Focused on backend and cybersecurity: designing APIs and services in Python (Flask), building CI/CD with GitHub/GitLab and Jenkins, and deploying with Docker/Kubernetes." data-es="Ingeniero informático especializado en Tecnologías de la Información. Enfocado en backend y ciberseguridad: diseño de APIs y servicios en Python (Flask), CI/CD con GitHub/GitLab y Jenkins, y despliegue en Docker/Kubernetes.">Ingeniero informático especializado en Tecnologías de la Información. Enfocado en backend y ciberseguridad: diseño de APIs y servicios en Python (Flask), CI/CD con GitHub/GitLab y Jenkins, y despliegue en Docker/Kubernetes.</span>
+				</p>
+				
+				<div class="hero-actions scale-in">
+					<a href="#contacto" class="btn btn-primary">
+						<span data-en="Get in touch" data-es="Contactar">Contactar</span>
+					</a>
+					<a href="#sobre-mi" class="btn btn-secondary">
+						<span data-en="Learn more" data-es="Conocer más">Conocer más</span>
+					</a>
+				</div>
+			</div>
+			
+			<div class="hero-visual slide-in-right">
+				<div class="profile-card glass-card">
+					<div class="profile-image">
+						<Image src="/javi.jpg" alt="Francisco Javier Martínez Martínez" class="profile-photo" width={200} height={200} loading="eager" />
+					</div>
+					<div class="profile-info">
+						<h3>Francisco Javier Martínez Martínez</h3>
+			<p class="profile-role" data-en="Software engineer" data-es="Ingeniero de software">Ingeniero de software</p>
+					<div class="profile-stats">
+						<div class="stat">
+							<span class="stat-number">+2</span>
+							<span class="stat-label" data-en="Years experience" data-es="Años de experiencia">Años de experiencia</span>
+						</div>
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="scroll-indicator">
+			<div class="scroll-arrow">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<path d="M7 13l3 3 7-7"></path>
+					<path d="M7 6l3 3 7-7"></path>
+				</svg>
+			</div>
+			<span data-en="Scroll to explore" data-es="Desplázate para explorar">Desplázate para explorar</span>
+		</div>
+	</div>
+</section>
+
+<style>
+	.hero {
+		min-height: 100vh;
+		display: flex;
+		align-items: center;
+		position: relative;
+		overflow: hidden;
+		padding: 2rem 0;
+	}
+	
+	.hero-background {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		pointer-events: none;
+		z-index: -1;
+	}
+	
+	.gradient-orb {
+		position: absolute;
+		border-radius: 50%;
+		filter: blur(60px);
+		opacity: 0.3;
+		animation: float 6s ease-in-out infinite;
+	}
+	
+	.orb-1 {
+		width: 300px;
+		height: 300px;
+		background: var(--gradient-primary);
+		top: 10%;
+		left: 10%;
+		animation-delay: 0s;
+	}
+	
+	.orb-2 {
+		width: 200px;
+		height: 200px;
+		background: var(--gradient-secondary);
+		top: 60%;
+		right: 20%;
+		animation-delay: 2s;
+	}
+	
+	.orb-3 {
+		width: 150px;
+		height: 150px;
+		background: var(--gradient-accent);
+		bottom: 20%;
+		left: 60%;
+		animation-delay: 4s;
+	}
+	
+	@keyframes float {
+		0%, 100% {
+			transform: translateY(0px) rotate(0deg);
+		}
+		50% {
+			transform: translateY(-20px) rotate(180deg);
+		}
+	}
+	
+	.hero-content {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 4rem;
+		align-items: center;
+		min-height: 80vh;
+	}
+	
+	.hero-title {
+		font-size: clamp(2.5rem, 5vw, 4rem);
+		font-weight: 700;
+		line-height: 1.1;
+		margin-bottom: 1rem;
+	}
+	
+	.name-text {
+		display: block;
+		margin-top: 0.5rem;
+	}
+	
+	.hero-subtitle {
+		font-size: clamp(1.25rem, 3vw, 1.75rem);
+		font-weight: 500;
+		color: var(--text-accent);
+		margin-bottom: 1.5rem;
+	}
+	
+	.hero-description {
+		font-size: 1.125rem;
+		color: var(--text-secondary);
+		line-height: 1.7;
+		margin-bottom: 2.5rem;
+		max-width: 500px;
+	}
+	
+	.hero-actions {
+		display: flex;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+	
+	.btn {
+		padding: 0.875rem 2rem;
+		border-radius: 50px;
+		text-decoration: none;
+		font-weight: 600;
+		transition: all 0.3s ease;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-width: 140px;
+	}
+	
+	.btn-primary {
+		background: var(--gradient-primary);
+		color: white;
+		border: none;
+		box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+	}
+	
+	.btn-primary:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+	}
+	
+	.btn-secondary {
+		background: transparent;
+		color: var(--text-primary);
+		border: 2px solid var(--border-color);
+	}
+	
+	.btn-secondary:hover {
+		background: var(--bg-secondary);
+		border-color: var(--text-accent);
+		color: var(--text-accent);
+		transform: translateY(-2px);
+	}
+	
+	.profile-card {
+		padding: 2rem;
+		text-align: center;
+		max-width: 300px;
+		margin: 0 auto;
+	}
+	
+	.profile-image {
+		margin-bottom: 1.5rem;
+	}
+	
+	.profile-photo {
+		width: 120px;
+		height: 120px;
+		border-radius: 50%;
+		object-fit: cover;
+		margin: 0 auto;
+		border: 3px solid var(--border-color);
+		transition: all 0.3s ease;
+	}
+	
+	.profile-photo:hover {
+		border-color: var(--text-accent);
+		transform: scale(1.05);
+	}
+	
+	.profile-info h3 {
+		font-size: 1.5rem;
+		font-weight: 600;
+		margin-bottom: 0.5rem;
+	}
+	
+	.profile-role {
+		color: var(--text-accent);
+		font-weight: 500;
+		margin-bottom: 1.5rem;
+	}
+	
+	.profile-stats {
+		display: flex;
+		justify-content: space-around;
+		gap: 1rem;
+	}
+	
+	.stat {
+		text-align: center;
+	}
+	
+	.stat-number {
+		display: block;
+		font-size: 1.5rem;
+		font-weight: 700;
+		color: var(--text-accent);
+	}
+	
+	.stat-label {
+		font-size: 0.875rem;
+		color: var(--text-secondary);
+	}
+	
+	.scroll-indicator {
+		position: absolute;
+		bottom: 2rem;
+		left: 50%;
+		transform: translateX(-50%);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.5rem;
+		color: var(--text-secondary);
+		font-size: 0.875rem;
+	}
+	
+	.scroll-arrow {
+		animation: bounce 2s infinite;
+	}
+	
+	@keyframes bounce {
+		0%, 20%, 50%, 80%, 100% {
+			transform: translateY(0);
+		}
+		40% {
+			transform: translateY(-10px);
+		}
+		60% {
+			transform: translateY(-5px);
+		}
+	}
+	
+	@media (max-width: 768px) {
+		.hero {
+			padding: 6rem 1rem 4rem;
+			min-height: calc(100vh - 2rem);
+		}
+		
+		.hero-content {
+			grid-template-columns: 1fr;
+			gap: 1.5rem;
+			text-align: center;
+		}
+		
+		.hero-visual {
+			order: -1;
+		}
+		
+		.hero-title {
+			font-size: 2.5rem;
+			line-height: 1.2;
+			margin-bottom: 1rem;
+		}
+		
+		.hero-subtitle {
+			font-size: 1.125rem;
+			margin-bottom: 1.5rem;
+		}
+		
+		.hero-description {
+			max-width: 100%;
+			font-size: 1rem;
+			line-height: 1.6;
+			margin-bottom: 2rem;
+		}
+		
+		.hero-actions {
+			justify-content: center;
+			flex-wrap: wrap;
+			gap: 1rem;
+			margin-bottom: 3rem;
+		}
+		
+		.scroll-indicator {
+			bottom: 1.5rem;
+		}
+		
+		.btn {
+			padding: 0.75rem 1.5rem;
+			font-size: 0.95rem;
+			min-width: 140px;
+		}
+		
+		.gradient-orb {
+			filter: blur(40px);
+			width: 180px;
+			height: 180px;
+		}
+		
+		.orb-1 {
+			width: 200px;
+			height: 200px;
+		}
+		
+		.orb-2 {
+			width: 150px;
+			height: 150px;
+		}
+		
+		.orb-3 {
+			width: 100px;
+			height: 100px;
+		}
+		
+		.profile-stats {
+			gap: 1.5rem;
+			margin-top: 2rem;
+		}
+		
+		.stat {
+			padding: 1rem;
+		}
+		
+		.stat-number {
+			font-size: 1.5rem;
+		}
+		
+		.stat-label {
+			font-size: 0.85rem;
+		}
+	}
+	
+	@media (max-width: 480px) {
+		.hero {
+			padding: 5rem 0.75rem 3rem;
+		}
+		
+		.hero-title {
+			font-size: 2rem;
+			margin-bottom: 0.75rem;
+		}
+		
+		.hero-subtitle {
+			font-size: 1rem;
+			margin-bottom: 1.25rem;
+		}
+		
+		.hero-description {
+			font-size: 0.9rem;
+			margin-bottom: 1.5rem;
+		}
+		
+		.hero-actions {
+			flex-direction: column;
+			align-items: center;
+			gap: 0.75rem;
+			margin-bottom: 4rem;
+		}
+		
+		.btn {
+			width: 100%;
+			max-width: 280px;
+			padding: 0.875rem 1.5rem;
+		}
+		
+		.gradient-orb {
+			width: 150px;
+			height: 150px;
+		}
+		
+		.profile-stats {
+			gap: 1rem;
+			margin-top: 1.5rem;
+		}
+		
+		.stat {
+			padding: 0.75rem;
+		}
+		
+		.stat-number {
+			font-size: 1.25rem;
+		}
+		
+		.stat-label {
+			font-size: 0.8rem;
+		}
+		
+		.scroll-indicator {
+			bottom: 1rem;
+			font-size: 0.75rem;
+			gap: 0.25rem;
+		}
+		
+		.scroll-arrow {
+			width: 20px;
+			height: 20px;
+		}
+		
+		.scroll-arrow svg {
+			width: 16px;
+			height: 16px;
+		}
+	}
+</style>

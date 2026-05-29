@@ -1,0 +1,555 @@
+---
+export interface Props {
+	title?: string;
+	description?: string;
+}
+
+const { title, description } = Astro.props;
+const defaultTitle = title || "Javi | Software engineer";
+const defaultDescription = description || "Portfolio | Software engineer specialized in backend and cybersecurity";
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={defaultDescription} data-en="Portfolio | Software engineer specialized in backend and cybersecurity" data-es="Portfolio | Ingeniero de software especializado en backend y ciberseguridad" />
+		<title data-en="Javi | Software engineer" data-es="Javi | Ingeniero de software">{defaultTitle}</title>
+		
+
+		
+		<!-- Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+	</head>
+	<body>
+		<slot />
+		
+		<!-- Language Detection Script -->
+		<!-- GSAP Scripts -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+		
+		<script defer>
+			// Wait for GSAP to load
+			window.addEventListener('load', function() {
+				if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+					gsap.registerPlugin(ScrollTrigger);
+				}
+			});
+			
+			// Detect browser language and set appropriate language
+			function detectLanguage() {
+				// Check for saved language preference first
+				const savedLang = localStorage.getItem('language');
+				let lang;
+				
+				if (savedLang && (savedLang === 'es' || savedLang === 'en')) {
+					lang = savedLang;
+				} else {
+					// Fallback to browser language detection
+					const browserLang = navigator.language || navigator.languages[0];
+					const isSpanish = browserLang.startsWith('es');
+					lang = isSpanish ? 'es' : 'en';
+				}
+				
+				document.documentElement.lang = lang;
+				document.documentElement.setAttribute('data-lang', lang);
+				
+				// Update text content based on language
+				updateLanguageContent(lang);
+			}
+			
+			function updateLanguageContent(lang) {
+			const elements = document.querySelectorAll('[data-en], [data-es]');
+			elements.forEach(element => {
+				const text = element.getAttribute(`data-${lang}`);
+				if (text) {
+					if (element.tagName === 'TITLE') {
+						document.title = text;
+					} else if (element.tagName === 'META' && element.getAttribute('name') === 'description') {
+						element.setAttribute('content', text);
+					} else {
+						element.innerHTML = text;
+					}
+				}
+			});
+				
+				// Update placeholders
+				const inputs = document.querySelectorAll('[data-en-placeholder], [data-es-placeholder]');
+				inputs.forEach(input => {
+					const placeholder = input.getAttribute(`data-${lang}-placeholder`);
+					if (placeholder) {
+						input.placeholder = placeholder;
+					}
+				});
+			}
+			
+			// Theme toggle functionality
+			function initTheme() {
+				// Detect system theme preference
+				const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+				const systemTheme = prefersDark ? 'dark' : 'light';
+				const savedTheme = localStorage.getItem('theme') || systemTheme;
+				
+				// Apply theme to both html and body immediately
+				document.documentElement.setAttribute('data-theme', savedTheme);
+				document.body.setAttribute('data-theme', savedTheme);
+				
+				// Force immediate style application
+				if (savedTheme === 'dark') {
+					document.body.style.background = '#0f172a';
+					document.body.style.color = '#f1f5f9';
+				} else {
+					document.body.style.background = '#ffffff';
+					document.body.style.color = '#1e293b';
+				}
+				
+				// Set initial icon state
+				setTimeout(() => {
+					const sunIcon = document.querySelector('.sun-icon');
+					const moonIcon = document.querySelector('.moon-icon');
+					
+					if (sunIcon && moonIcon) {
+						if (savedTheme === 'dark') {
+							// Dark mode: show sun
+							sunIcon.style.opacity = '1';
+							sunIcon.style.transform = 'rotate(0deg) scale(1)';
+							moonIcon.style.opacity = '0';
+							moonIcon.style.transform = 'rotate(180deg) scale(0.8)';
+						} else {
+							// Light mode: show moon
+							sunIcon.style.opacity = '0';
+							sunIcon.style.transform = 'rotate(-180deg) scale(0.8)';
+							moonIcon.style.opacity = '1';
+							moonIcon.style.transform = 'rotate(0deg) scale(1)';
+						}
+					}
+				}, 100);
+			}
+			
+			function toggleTheme() {
+				const currentTheme = document.documentElement.getAttribute('data-theme');
+				const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+				
+				// Force immediate theme change
+				document.documentElement.setAttribute('data-theme', newTheme);
+				document.body.setAttribute('data-theme', newTheme);
+				localStorage.setItem('theme', newTheme);
+				
+				// Force repaint by temporarily changing a style
+				const body = document.body;
+				body.style.opacity = '0.99';
+				requestAnimationFrame(() => {
+					body.style.opacity = '1';
+				});
+				
+				// Update icons directly
+				const sunIcon = document.querySelector('.sun-icon');
+				const moonIcon = document.querySelector('.moon-icon');
+				
+				if (sunIcon && moonIcon) {
+					if (newTheme === 'dark') {
+						// Dark mode: show sun
+						sunIcon.style.opacity = '1';
+						sunIcon.style.transform = 'rotate(0deg) scale(1)';
+						moonIcon.style.opacity = '0';
+						moonIcon.style.transform = 'rotate(180deg) scale(0.8)';
+					} else {
+						// Light mode: show moon
+						sunIcon.style.opacity = '0';
+						sunIcon.style.transform = 'rotate(-180deg) scale(0.8)';
+						moonIcon.style.opacity = '1';
+						moonIcon.style.transform = 'rotate(0deg) scale(1)';
+					}
+				}
+				
+				// Force CSS variables update on mobile
+				if (window.innerWidth <= 768) {
+					setTimeout(() => {
+						document.documentElement.style.setProperty('--force-update', Math.random());
+					}, 50);
+				}
+			}
+			
+			// Initialize on load
+			detectLanguage();
+			initTheme();
+			
+			// Make functions available globally
+			window.toggleTheme = toggleTheme;
+			window.updateLanguageContent = updateLanguageContent;
+			
+			// Initialize GSAP animations when DOM is loaded
+			document.addEventListener('DOMContentLoaded', function() {
+				// Update language content after DOM is loaded
+				const currentLang = document.documentElement.lang || 'es';
+				updateLanguageContent(currentLang);
+				
+				// Register ScrollTrigger plugin
+				if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+					gsap.registerPlugin(ScrollTrigger);
+					
+					// Set initial states for animations
+					gsap.set('.fade-in', { opacity: 0, y: 30 });
+					gsap.set('.slide-in-left', { opacity: 0, x: -50 });
+					gsap.set('.slide-in-right', { opacity: 0, x: 50 });
+					gsap.set('.scale-in', { opacity: 0, scale: 0.8 });
+					
+					// Animate hero section immediately
+					gsap.to('.fade-in', {
+						opacity: 1,
+						y: 0,
+						duration: 1,
+						stagger: 0.2,
+						ease: 'power2.out',
+						delay: 0.5
+					});
+					
+					// Animate other sections on scroll
+					gsap.to('.slide-in-left', {
+						opacity: 1,
+						x: 0,
+						duration: 0.8,
+						stagger: 0.1,
+						ease: 'power2.out',
+						scrollTrigger: {
+							trigger: '.slide-in-left',
+							start: 'top 85%',
+							toggleActions: 'play none none none'
+						}
+					});
+					
+					gsap.to('.slide-in-right', {
+						opacity: 1,
+						x: 0,
+						duration: 0.8,
+						stagger: 0.1,
+						ease: 'power2.out',
+						scrollTrigger: {
+							trigger: '.slide-in-right',
+							start: 'top 85%',
+							toggleActions: 'play none none none'
+						}
+					});
+					
+					gsap.to('.scale-in', {
+						opacity: 1,
+						scale: 1,
+						duration: 0.8,
+						stagger: 0.1,
+						ease: 'back.out(1.7)',
+						scrollTrigger: {
+							trigger: '.scale-in',
+							start: 'top 85%',
+							toggleActions: 'play none none none'
+						}
+					});
+				}
+			});
+		</script>
+		
+		<footer class="footer">
+			<div class="container">
+				<p class="footer-text">&copy; 2026 Javi</p>
+				<p class="footer-update" data-en="Last updated: May 2026" data-es="Última actualización: Mayo 2026">Última actualización: Mayo 2026</p>
+			</div>
+		</footer>
+	</body>
+</html>
+
+<style is:global>
+	:root {
+		/* Light theme colors */
+		--bg-primary: #ffffff;
+		--bg-secondary: #f8fafc;
+		--bg-glass: rgba(255, 255, 255, 0.95);
+		--text-primary: #1e293b;
+		--text-secondary: #64748b;
+		--text-accent: #6366f1;
+		--border-color: rgba(148, 163, 184, 0.4);
+		--shadow-color: rgba(0, 0, 0, 0.15);
+		--gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		--gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+		--gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+	}
+	
+	[data-theme="dark"] {
+		/* Dark theme colors */
+		--bg-primary: #0f172a;
+		--bg-secondary: #1e293b;
+		--bg-glass: rgba(15, 23, 42, 0.8);
+		--text-primary: #f1f5f9;
+		--text-secondary: #94a3b8;
+		--text-accent: #818cf8;
+		--border-color: rgba(148, 163, 184, 0.1);
+		--shadow-color: rgba(0, 0, 0, 0.3);
+		--gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		--gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+		--gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+	}
+	
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+	
+	html {
+		scroll-behavior: smooth;
+		font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	}
+	
+	body {
+		background: var(--bg-primary) !important;
+		color: var(--text-primary) !important;
+		line-height: 1.6;
+		transition: background-color 0.2s ease, color 0.2s ease;
+		overflow-x: hidden;
+		position: relative;
+		min-height: 100vh;
+		min-height: 100dvh;
+	}
+	
+	/* Force theme application on body */
+	body[data-theme="dark"] {
+		background: #0f172a !important;
+		color: #f1f5f9 !important;
+	}
+	
+	body[data-theme="light"] {
+		background: #ffffff !important;
+		color: #1e293b !important;
+	}
+	
+	/* Mobile specific fixes */
+	@media (max-width: 768px) {
+		body {
+			position: relative;
+			overflow-x: hidden;
+			-webkit-overflow-scrolling: touch;
+			padding-top: 5rem;
+		}
+		
+		/* Force navigation to stay fixed on mobile */
+		.nav {
+			position: fixed !important;
+			top: 0.5rem !important;
+			left: 0.5rem !important;
+			right: 0.5rem !important;
+			transform: none !important;
+			z-index: 999999 !important;
+			width: calc(100% - 1rem) !important;
+			max-width: none !important;
+			backdrop-filter: blur(20px) saturate(180%) !important;
+			-webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+		}
+	}
+	
+	/* Ensure navigation stays fixed on desktop */
+	@media (min-width: 769px) {
+		.nav {
+			position: fixed !important;
+			top: 1rem !important;
+			left: 50% !important;
+			transform: translateX(-50%) !important;
+			z-index: 99999 !important;
+			width: calc(100% - 2rem) !important;
+			max-width: 1000px !important;
+		}
+	}
+	
+	/* Liquid Glass Effects */
+	.glass {
+		background: var(--bg-glass);
+		backdrop-filter: blur(20px);
+		-webkit-backdrop-filter: blur(20px);
+		border: 1px solid var(--border-color);
+		border-radius: 20px;
+		box-shadow: 0 8px 32px var(--shadow-color);
+	}
+	
+	.glass-card {
+		background: var(--bg-glass);
+		backdrop-filter: blur(15px);
+		-webkit-backdrop-filter: blur(15px);
+		border: 1px solid var(--border-color);
+		border-radius: 16px;
+		box-shadow: 0 4px 16px var(--shadow-color);
+		transition: all 0.3s ease;
+	}
+	
+	.glass-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 8px 32px var(--shadow-color);
+	}
+	
+	/* Light theme specific card styles */
+	:root .about-card,
+	:root .modern-contact-card,
+	:root .modern-volunteer-card,
+	:root .modern-language-card,
+	:root .education-card,
+	:root .experience-card {
+		background: rgba(248, 250, 252, 0.8);
+		border: 1px solid rgba(148, 163, 184, 0.3);
+		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+	}
+
+	:root .about-card:hover,
+	:root .modern-contact-card:hover,
+	:root .modern-volunteer-card:hover,
+	:root .modern-language-card:hover,
+	:root .education-card:hover,
+	:root .experience-card:hover {
+		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+		border-color: rgba(148, 163, 184, 0.4);
+	}
+
+	/* Gradient text */
+	.gradient-text {
+		background: var(--gradient-primary);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+	}
+	
+	/* Smooth animations */
+	.fade-in {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	
+	.slide-in-left {
+		opacity: 1;
+		transform: translateX(0);
+	}
+	
+	.slide-in-right {
+		opacity: 1;
+		transform: translateX(0);
+	}
+	
+	.scale-in {
+		opacity: 1;
+		transform: scale(1);
+	}
+	
+	/* Responsive design */
+	.container {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 2rem;
+	}
+	
+	@media (max-width: 768px) {
+		.container {
+			padding: 0 1rem;
+			max-width: calc(100% - 2rem);
+		}
+		
+		body {
+			overflow-x: hidden;
+		}
+		
+		main {
+			padding-top: 80px;
+		}
+	}
+	
+	@media (max-width: 480px) {
+		.container {
+			padding: 0 0.75rem;
+			max-width: calc(100% - 1.5rem);
+		}
+		
+		main {
+			padding-top: 70px;
+		}
+		
+		section {
+			padding: 3rem 0;
+			margin: 0;
+		}
+	}
+	
+	/* Footer Styles */
+	.footer {
+		background: var(--bg-glass);
+		backdrop-filter: blur(20px);
+		border-top: 1px solid var(--border-color);
+		padding: 2rem 0;
+		margin-top: 4rem;
+		text-align: center;
+	}
+	
+	.footer-text {
+		color: var(--text-secondary);
+		font-size: 0.9rem;
+		margin: 0;
+		transition: color 0.3s ease;
+	}
+	
+	.footer-update {
+		color: var(--text-secondary);
+		font-size: 0.8rem;
+		margin: 0.5rem 0 0 0;
+		opacity: 0.7;
+	}
+	
+	.footer-text:hover {
+		color: var(--text-accent);
+	}
+	
+	@media (max-width: 768px) {
+		.footer {
+			padding: 1.5rem 0;
+			margin-top: 3rem;
+		}
+		
+		.footer-text {
+			font-size: 0.85rem;
+		}
+		
+		.footer-update {
+			font-size: 0.75rem;
+		}
+	}
+	
+	@media (max-width: 480px) {
+		.footer {
+			padding: 1.25rem 0;
+			margin-top: 2rem;
+		}
+		
+		.footer-text {
+			font-size: 0.8rem;
+		}
+		
+		.footer-update {
+			font-size: 0.7rem;
+		}
+	}
+	
+	/* Custom scrollbar */
+	::-webkit-scrollbar {
+		width: 8px;
+	}
+	
+	::-webkit-scrollbar-track {
+		background: var(--bg-secondary);
+	}
+	
+	::-webkit-scrollbar-thumb {
+		background: var(--gradient-primary);
+		border-radius: 4px;
+	}
+	
+	::-webkit-scrollbar-thumb:hover {
+		background: var(--gradient-secondary);
+	}
+</style>
