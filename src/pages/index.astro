@@ -5,18 +5,19 @@ import Hero from '../components/Hero.astro';
 import About from '../components/About.astro';
 import Experience from '../components/Experience.astro';
 import Education from '../components/Education.astro';
-import Volunteering from '../components/Volunteering.astro';
+import Projects from '../components/Projects.astro';
 import Contact from '../components/Contact.astro';
+import '../styles/gallery-redesign.css';
 ---
 
 <Layout>
 	<Navigation />
-	<main>
+	<main id="contenido">
 		<Hero />
 		<About />
 		<Experience />
 		<Education />
-		<Volunteering />
+		<Projects />
 		<Contact />
 	</main>
 </Layout>

@@ -1,5 +1,6 @@
 {
-  "name": "",
+  "name": "fjaviermmdev-portfolio",
+  "private": true,
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -9,7 +10,6 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.12.4",
-    "gsap": "^3.13.0"
+    "astro": "^5.12.4"
   }
 }
