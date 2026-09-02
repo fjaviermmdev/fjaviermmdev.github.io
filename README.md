@@ -1,6 +1,6 @@
-# fjaviermm.dev
+# Portfolio de Javi
 
-Portfolio personal de Francisco Javier Martínez Martínez, desarrollado con Astro y publicado en `fjaviermm.dev`.
+Portfolio personal de Francisco Javier Martínez Martínez, desarrollado con Astro y publicado en `fjaviermmdev.github.io`.
 
 ## Desarrollo
 
