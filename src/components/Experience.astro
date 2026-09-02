@@ -19,7 +19,7 @@ const roles = [
 			'Development and maintenance of real-time AML detection services.',
 			'Performance optimization, automated testing and incident diagnosis.',
 		],
-		technologies: ['Python', 'REST APIs', 'Elasticsearch', 'SQL', 'Docker', 'AWS', 'Big Data', 'Machine Learning'],
+		technologies: ['Python', 'REST APIs', 'Elasticsearch', 'SQL', 'PyTest', 'CI/CD', 'Big Data', 'AI'],
 	},
 	{
 		company: 'Odin Solutions',
@@ -32,13 +32,13 @@ const roles = [
 		descriptionEn: 'I designed and developed backend solutions for European and national projects. I worked with APIs, microservices, identity, IoT and containerized deployments, as well as pipelines and internal services.',
 		highlightsEs: [
 			'Punto de Administración de Políticas XACML desarrollado desde cero con Flask y Docker para MASTERPIECE.',
-			'Agente MQTT LoRaWAN con un 46 % menos de consumo medio que agentes open source comparables.',
-			'Pipelines CI/CD y operación de servicios internos con foco en disponibilidad y seguridad.',
+			'Agente MQTT LoRaWAN con aproximadamente un 46 % menos de consumo medio de recursos frente a la media de agentes de código abierto.',
+			'Repositorios Git, pipelines de Jenkins, scripts en Bash y administración de Keycloak.',
 		],
 		highlightsEn: [
 			'XACML Policy Administration Point built from scratch with Flask and Docker for MASTERPIECE.',
-			'MQTT LoRaWAN agent with 46% lower average consumption than comparable open-source agents.',
-			'CI/CD pipelines and internal service operations focused on availability and security.',
+			'MQTT LoRaWAN agent with approximately 46% lower average resource usage than the average open-source agent.',
+			'Git repositories, Jenkins pipelines, Bash scripts and Keycloak administration.',
 		],
 		technologies: ['Python', 'Java', 'Go', 'Flask', 'Docker', 'Kubernetes', 'Keycloak', 'Jenkins', 'FIWARE', 'MQTT'],
 	},
@@ -47,7 +47,7 @@ const roles = [
 
 <section id="experiencia" class="experience-section">
 	<div class="section-shell">
-		<header class="section-heading section-heading-on-dark reveal">
+		<header class="section-heading section-heading-on-dark reveal" data-section="02">
 			<p class="section-eyebrow" data-en="Experience" data-es="Experiencia">Experiencia</p>
 			<h2 data-en="Professional experience." data-es="Experiencia profesional.">Experiencia profesional.</h2>
 			<p class="section-intro" data-en="Backend development in financial software, applied research and European technology projects." data-es="Desarrollo backend en software financiero, investigación aplicada y proyectos tecnológicos europeos.">Desarrollo backend en software financiero, investigación aplicada y proyectos tecnológicos europeos.</p>
@@ -71,7 +71,7 @@ const roles = [
 
 						<p class="role-description" data-en={role.descriptionEn} data-es={role.descriptionEs}>{role.descriptionEs}</p>
 
-						<ul class="technology-list" aria-label="Tecnologías">
+						<ul class="technology-list" aria-label="Tecnologías" data-aria-en="Technologies" data-aria-es="Tecnologías">
 							{role.technologies.map((technology) => <li>{technology}</li>)}
 						</ul>
 

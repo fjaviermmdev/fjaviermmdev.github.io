@@ -1,19 +1,20 @@
 <header class="site-header">
 	<div class="global-nav">
-		<nav class="global-nav-inner" aria-label="Navegación principal">
-			<a class="global-brand" href="#inicio" aria-label="Portfolio, inicio">
+		<nav class="global-nav-inner" aria-label="Navegación principal" data-aria-en="Main navigation" data-aria-es="Navegación principal">
+			<a class="global-brand" href="#inicio" aria-label="Portfolio, inicio" data-aria-en="Portfolio, home" data-aria-es="Portfolio, inicio">
 				<span>Portfolio</span>
 			</a>
 
 			<div class="nav-links" id="nav-links">
 				<a href="#sobre-mi" data-en="Profile" data-es="Perfil">Perfil</a>
 				<a href="#experiencia" data-en="Experience" data-es="Experiencia">Experiencia</a>
-				<a href="#educacion" data-en="Education" data-es="Formación">Formación</a>
 				<a href="#proyectos" data-en="Projects" data-es="Proyectos">Proyectos</a>
+				<a href="#educacion" data-en="Education" data-es="Formación">Formación</a>
+				<a class="nav-contact-mobile" href="#contacto" data-en="Contact" data-es="Contacto">Contacto</a>
 			</div>
 
 			<div class="global-actions">
-				<button class="language-button" type="button" id="language-button" aria-label="Cambiar idioma">
+				<button class="language-button" type="button" id="language-button" aria-label="Cambiar idioma" data-aria-en="Change language" data-aria-es="Cambiar idioma">
 					<span class="show-on-es">EN</span>
 					<span class="show-on-en">ES</span>
 				</button>
@@ -44,15 +45,24 @@
 	const navLinks = document.getElementById('nav-links');
 	const languageButton = document.getElementById('language-button');
 	const sectionLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.nav-links a'));
+	const getMenuLabel = (isOpen: boolean) => {
+		const english = document.documentElement.lang === 'en';
+		if (isOpen) return english ? 'Close menu' : 'Cerrar menú';
+		return english ? 'Open menu' : 'Abrir menú';
+	};
 
 	function closeMenu() {
 		navLinks?.classList.remove('is-open');
 		menuButton?.setAttribute('aria-expanded', 'false');
+		menuButton?.setAttribute('aria-label', getMenuLabel(false));
+		document.body.classList.remove('menu-open');
 	}
 
 	menuButton?.addEventListener('click', () => {
 		const isOpen = navLinks?.classList.toggle('is-open') ?? false;
 		menuButton.setAttribute('aria-expanded', String(isOpen));
+		menuButton.setAttribute('aria-label', getMenuLabel(isOpen));
+		document.body.classList.toggle('menu-open', isOpen);
 	});
 	document.addEventListener('keydown', (event) => {
 		if (event.key !== 'Escape' || !navLinks?.classList.contains('is-open')) return;
@@ -64,6 +74,9 @@
 	});
 
 	languageButton?.addEventListener('click', () => (window as any).toggleLanguage?.());
+	document.addEventListener('languageChanged', () => {
+		menuButton?.setAttribute('aria-label', getMenuLabel(navLinks?.classList.contains('is-open') ?? false));
+	});
 	sectionLinks.forEach((link) => link.addEventListener('click', closeMenu));
 
 	const sections = sectionLinks

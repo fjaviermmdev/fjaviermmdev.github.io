@@ -2,16 +2,16 @@
 const skillGroups = [
 	{ es: 'Backend', en: 'Backend', skills: ['Python', 'Java', 'Go', 'Flask', 'FastAPI', 'Django', 'REST APIs', 'SQLAlchemy'] },
 	{ es: 'Datos', en: 'Data', skills: ['PostgreSQL', 'MySQL', 'MongoDB', 'Elasticsearch', 'InfluxDB', 'Big Data'] },
-	{ es: 'Cloud y DevOps', en: 'Cloud and DevOps', skills: ['Docker', 'Kubernetes', 'AWS', 'Jenkins', 'GitHub Actions', 'NGINX', 'Traefik'] },
-	{ es: 'Seguridad', en: 'Security', skills: ['Cybersecurity', 'Keycloak', 'XACML', 'IAM', 'Pentesting', 'Hardening'] },
+	{ es: 'Cloud y DevOps', en: 'Cloud and DevOps', skills: ['Docker', 'Kubernetes', 'AWS', 'Jenkins', 'GitHub Actions', 'GitLab', 'NGINX', 'Traefik'] },
+	{ es: 'Seguridad', en: 'Security', skills: ['Cybersecurity', 'Keycloak', 'XACML', 'IAM', 'Pentesting'] },
 	{ es: 'Sistemas', en: 'Systems', skills: ['Linux', 'Bash', 'Microservices', 'Distributed systems', 'MQTT', 'FIWARE'] },
-	{ es: 'Calidad', en: 'Quality', skills: ['PyTest', 'k6', 'Locust', 'Postman', 'OpenAPI', 'Observability'] },
+	{ es: 'Calidad', en: 'Quality', skills: ['PyTest', 'k6', 'Locust', 'Postman', 'OpenAPI'] },
 ];
 ---
 
 <section id="sobre-mi" class="profile-section">
 	<div class="section-shell">
-		<header class="section-heading reveal">
+		<header class="section-heading reveal" data-section="01">
 			<p class="section-eyebrow" data-en="Profile" data-es="Perfil">Perfil</p>
 			<h2 data-en="Backend, infrastructure and security." data-es="Backend, infraestructura y seguridad.">Backend, infraestructura y seguridad.</h2>
 			<p class="section-intro" data-en="I work on backend applications and the systems that support them, with a particular interest in automation, observability and application security." data-es="Trabajo en aplicaciones backend y en los sistemas que las sostienen, con especial interés por la automatización, la observabilidad y la seguridad de las aplicaciones.">Trabajo en aplicaciones backend y en los sistemas que las sostienen, con especial interés por la automatización, la observabilidad y la seguridad de las aplicaciones.</p>
@@ -41,7 +41,7 @@ const skillGroups = [
 				<p data-en="Select a category to see the tools I have used." data-es="Selecciona una categoría para ver las herramientas con las que he trabajado.">Selecciona una categoría para ver las herramientas con las que he trabajado.</p>
 			</header>
 
-			<div class="stack-tabs" role="tablist" aria-label="Categorías técnicas">
+			<div class="stack-tabs" role="tablist" aria-label="Categorías técnicas" data-aria-en="Technical categories" data-aria-es="Categorías técnicas">
 				{skillGroups.map((group, index) => (
 					<button
 						class:list={['stack-tab', { 'is-active': index === 0 }]}

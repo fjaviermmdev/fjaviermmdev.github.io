@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://fjaviermm.dev/sitemap.xml

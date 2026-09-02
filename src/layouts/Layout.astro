@@ -26,7 +26,9 @@ const {
 			data-es="Portfolio de Javi Martínez, ingeniero de software especializado en desarrollo backend y ciberseguridad"
 		/>
 		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="Portfolio de Javi" />
 		<meta property="og:locale" content="es_ES" />
+		<meta property="og:locale:alternate" content="en_GB" />
 		<meta property="og:url" content="https://fjaviermm.dev/" />
 		<meta property="og:title" content="Javi | Ingeniero de software" />
 		<meta property="og:description" content="Portfolio de Javi Martínez, ingeniero de software especializado en desarrollo backend y ciberseguridad" />
@@ -36,6 +38,20 @@ const {
 		<meta name="twitter:title" content="Javi | Ingeniero de software" />
 		<meta name="twitter:description" content="Portfolio de Javi Martínez, ingeniero de software especializado en desarrollo backend y ciberseguridad" />
 		<meta name="twitter:image" content="https://fjaviermm.dev/javi.jpg" />
+		<meta name="robots" content="index, follow" />
+		<script type="application/ld+json" set:html={JSON.stringify({
+			'@context': 'https://schema.org',
+			'@type': 'Person',
+			name: 'Francisco Javier Martínez Martínez',
+			alternateName: 'Javi Martínez',
+			url: 'https://fjaviermm.dev/',
+			image: 'https://fjaviermm.dev/javi.jpg',
+			jobTitle: 'Software Engineering Analyst I',
+			worksFor: { '@type': 'Organization', name: 'Lynx Tech' },
+			alumniOf: { '@type': 'CollegeOrUniversity', name: 'Universidad de Murcia' },
+			sameAs: ['https://linkedin.com/in/fjaviermm', 'https://github.com/fjaviermmdev'],
+			knowsAbout: ['Python', 'Backend development', 'Cybersecurity', 'Cloud computing', 'REST APIs'],
+		})} />
 		<title data-en="Javi | Software engineer" data-es="Javi | Ingeniero de software">{title}</title>
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -82,6 +98,11 @@ const {
 					} else {
 						element.innerHTML = value;
 					}
+				});
+
+				document.querySelectorAll<HTMLElement>('[data-aria-en][data-aria-es]').forEach((element) => {
+					const value = language === 'en' ? element.dataset.ariaEn : element.dataset.ariaEs;
+					if (value) element.setAttribute('aria-label', value);
 				});
 
 				document.querySelectorAll<HTMLAnchorElement>('[data-cv-link]').forEach((link) => {
