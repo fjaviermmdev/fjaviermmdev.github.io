@@ -1,12 +1,20 @@
+---
+import { cvPath, type Language } from '../lib/i18n';
+interface Props { lang: Language }
+const { lang } = Astro.props;
+---
+
 <section id="contacto" class="contact-section">
 	<div class="contact-shell reveal">
-		<p class="section-eyebrow" data-en="Contact" data-es="Contacto">Contacto</p>
-		<h2 data-en="Résumé and contact." data-es="Currículum y contacto.">Currículum y contacto.</h2>
-		<p class="contact-intro" data-en="You can review my experience in detail in my résumé or contact me by email, LinkedIn or GitHub." data-es="Puedes consultar mi experiencia con más detalle en el currículum o contactar conmigo por correo, LinkedIn o GitHub.">Puedes consultar mi experiencia con más detalle en el currículum o contactar conmigo por correo, LinkedIn o GitHub.</p>
+		<div class="contact-heading">
+		<p class="section-eyebrow">{lang === 'en' ? "Contact" : "Contacto"}</p>
+		<h2>{lang === 'en' ? "Résumé and contact." : "Currículum y contacto."}</h2>
+		<p class="contact-intro">{lang === 'en' ? "More about my experience in the CV. If you would like to get in touch, you can write to me directly." : "Mi experiencia, con más detalle, en el CV. Si quieres contactar conmigo, puedes escribirme directamente."}</p>
+		</div>
 
 		<div class="contact-primary">
-			<a class="contact-cv" href="/CV_Javi-ES-public.pdf" data-cv-link target="_blank" rel="noopener noreferrer"><span data-en="View résumé" data-es="Ver currículum">Ver currículum</span> <span aria-hidden="true">↗</span></a>
-			<p data-en="Available in Spanish and English." data-es="Disponible en español e inglés.">Disponible en español e inglés.</p>
+			<a class="contact-cv" href={cvPath(lang)} data-cv-link target="_blank" rel="noopener noreferrer"><span>{lang === 'en' ? "View résumé" : "Ver currículum"}</span> <span aria-hidden="true">↗</span></a>
+			<p class="cv-languages"><span>PDF · {lang === 'en' ? 'English' : 'Español'}</span><a href={cvPath(lang === 'en' ? 'es' : 'en')} lang={lang === 'en' ? 'es' : 'en'} target="_blank" rel="noopener noreferrer">{lang === 'en' ? 'CV en español' : 'CV in English'}</a></p>
 		</div>
 
 		<div class="contact-actions">

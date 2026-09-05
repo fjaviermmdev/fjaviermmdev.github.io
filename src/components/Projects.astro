@@ -1,55 +1,69 @@
+---
+import { cvPath, type Language } from '../lib/i18n';
+interface Props { lang: Language }
+const { lang } = Astro.props;
+---
 <section id="proyectos" class="projects-section">
-	<div class="section-shell">
-		<header class="section-heading reveal" data-section="03">
-			<p class="section-eyebrow" data-en="Selected work" data-es="Trabajo seleccionado">Trabajo seleccionado</p>
-			<h2 data-en="Software with context." data-es="Software con contexto.">Software con contexto.</h2>
-			<p class="section-intro" data-en="Professional work, independent open source and university involvement, clearly separated." data-es="Trabajo profesional, open source independiente y participación universitaria, claramente diferenciados.">Trabajo profesional, open source independiente y participación universitaria, claramente diferenciados.</p>
-		</header>
-
-		<div class="projects-showcase">
-			<article class="project-feature reveal">
-				<div class="project-feature-copy">
-					<p class="project-kicker" data-en="Professional · Odin Solutions" data-es="Profesional · Odin Solutions">Profesional · Odin Solutions</p>
-					<h3 data-en="MQTT agent for LoRaWAN" data-es="Agente MQTT para LoRaWAN">Agente MQTT para LoRaWAN</h3>
-					<p data-en="I developed a Python and Docker agent to decode and normalise LoRaWAN device data for publication in Orion-LD, with approximately 46% lower average resource usage than the average open-source agent." data-es="Desarrollé un agente en Python y Docker para decodificar y normalizar datos de dispositivos LoRaWAN para su publicación en Orion-LD, con aproximadamente un 46 % menos de consumo medio de recursos frente a la media de agentes de código abierto.">Desarrollé un agente en Python y Docker para decodificar y normalizar datos de dispositivos LoRaWAN para su publicación en Orion-LD, con aproximadamente un 46 % menos de consumo medio de recursos frente a la media de agentes de código abierto.</p>
-					<ul class="project-stack" aria-label="Tecnologías" data-aria-en="Technologies" data-aria-es="Tecnologías"><li>Python</li><li>MQTT</li><li>LoRaWAN</li><li>FIWARE</li><li>Docker</li></ul>
-				</div>
-				<div class="project-metric" aria-label="Aproximadamente 46 por ciento menos de consumo medio de recursos" data-aria-en="Approximately 46 percent lower average resource usage" data-aria-es="Aproximadamente 46 por ciento menos de consumo medio de recursos">
-					<strong><small>≈</small>46<span>%</span></strong>
-					<p data-en="lower average resource usage than comparable open-source agents" data-es="menos consumo medio de recursos frente a la media open source">menos consumo medio de recursos frente a la media open source</p>
-				</div>
-			</article>
-
-			<div class="project-grid">
-				<article class="project-card reveal">
-					<p class="project-index" data-en="02 / Professional · Odin Solutions" data-es="02 / Profesional · Odin Solutions">02 / Profesional · Odin Solutions</p>
-					<h3 data-en="XACML policy administration" data-es="Administración de políticas XACML">Administración de políticas XACML</h3>
-					<p data-en="A Policy Administration Point built from scratch with Flask and Docker for the European MASTERPIECE project." data-es="Punto de Administración de Políticas desarrollado desde cero con Flask y Docker para el proyecto europeo MASTERPIECE.">Punto de Administración de Políticas desarrollado desde cero con Flask y Docker para el proyecto europeo MASTERPIECE.</p>
-					<ul class="project-stack" aria-label="Tecnologías" data-aria-en="Technologies" data-aria-es="Tecnologías"><li>Python</li><li>Flask</li><li>XACML</li><li>Docker</li></ul>
-				</article>
-
-				<article class="project-card reveal">
-					<p class="project-index" data-en="03 / Independent open source" data-es="03 / Open source independiente">03 / Open source independiente</p>
-					<h3 data-en="Android for Galaxy Note 3" data-es="Android para Galaxy Note 3">Android para Galaxy Note 3</h3>
-					<p data-en="I developed and maintained custom Android 8.1 and 9 ROMs for every Galaxy Note 3 variant, publishing stable builds for the XDA community." data-es="Desarrollé y mantuve ROMs personalizadas de Android 8.1 y 9 para todas las variantes del Galaxy Note 3, publicando versiones estables para la comunidad de XDA.">Desarrollé y mantuve ROMs personalizadas de Android 8.1 y 9 para todas las variantes del Galaxy Note 3, publicando versiones estables para la comunidad de XDA.</p>
-					<div class="project-links">
-						<a href="https://xdaforums.com/t/rom-9-0-hlte-tmo-chn-kor-pixel-experience-aosp-r16-2018-11-19-stopped.3855455/" target="_blank" rel="noopener noreferrer" data-en="Android 9 on XDA" data-es="Android 9 en XDA">Android 9 en XDA</a>
-						<a href="https://xdaforums.com/t/rom-8-1-0-hlte-tmo-chn-kor-pixel-experience-aosp-r47-2018-10-15.3827969/" target="_blank" rel="noopener noreferrer" data-en="Android 8.1 on XDA" data-es="Android 8.1 en XDA">Android 8.1 en XDA</a>
-					</div>
-				</article>
-			</div>
-
-			<article class="project-contribution reveal">
-				<div>
-					<p class="project-index" data-en="04 / University community" data-es="04 / Comunidad universitaria">04 / Comunidad universitaria</p>
-					<h3>Delegación de Estudiantes de la Facultad de Informática</h3>
-					<p>Universidad de Murcia</p>
-				</div>
-				<div class="project-contribution-meta">
-					<span data-en="Social media manager" data-es="Gestor de redes sociales">Gestor de redes sociales</span>
-					<span>2020–2022</span>
-				</div>
-			</article>
-		</div>
-	</div>
+  <div class="section-shell">
+    <header class="section-heading reveal" data-section="04">
+      <p class="section-eyebrow">{lang === 'en' ? 'Selected work' : 'Proyectos'}</p>
+      <h2>{lang === 'en' ? 'Selected projects.' : 'Proyectos seleccionados.'}</h2>
+      <p class="section-intro">{lang === 'en' ? 'Two examples from my time at Odin Solutions and an independent open-source project.' : 'Dos ejemplos de mi etapa en Odin Solutions y un proyecto open source independiente.'}</p>
+    </header>
+    <div class="projects-showcase">
+      <article class="project-feature reveal" id="proyecto-mqtt" tabindex="-1">
+        <div class="project-feature-copy">
+          <p class="project-kicker">{lang === 'en' ? '01 / Professional · Odin Solutions' : '01 / Profesional · Odin Solutions'}</p>
+          <h3>{lang === 'en' ? 'MQTT agent for LoRaWAN' : 'Agente MQTT para LoRaWAN'}</h3>
+          <dl class="project-facts">
+            <div><dt>{lang === 'en' ? 'The work' : 'El trabajo'}</dt><dd>{lang === 'en' ? 'Integrate LoRaWAN device data into Orion-LD, the FIWARE context broker.' : 'Integrar datos de dispositivos LoRaWAN en Orion-LD, el broker de contexto de FIWARE.'}</dd></div>
+            <div><dt>{lang === 'en' ? 'My contribution' : 'Mi aportación'}</dt><dd>{lang === 'en' ? 'I developed the Python agent that decodes and normalises the data for publication, packaged with Docker.' : 'Desarrollé el agente en Python que decodifica y normaliza los datos para publicarlos, empaquetado con Docker.'}</dd></div>
+          </dl>
+          <ul class="project-stack" aria-label={lang === 'en' ? 'Technologies' : 'Tecnologías'}><li>Python</li><li>MQTT</li><li>LoRaWAN</li><li>FIWARE</li><li>Docker</li></ul>
+        </div>
+        <figure class="project-diagram">
+          <figcaption>{lang === 'en' ? 'Data flow · overview' : 'Flujo de datos · esquema general'}</figcaption>
+          <ol class="data-flow">
+            <li><span class="flow-index" aria-hidden="true">01</span><div><strong>LoRaWAN</strong><span>{lang === 'en' ? 'Device data' : 'Datos de dispositivos'}</span></div></li>
+            <li class="flow-agent"><span class="flow-index" aria-hidden="true">02</span><div><strong>{lang === 'en' ? 'Python agent' : 'Agente Python'}</strong><span>{lang === 'en' ? 'Decode and normalise' : 'Decodificar y normalizar'}</span></div></li>
+            <li><span class="flow-index" aria-hidden="true">03</span><div><strong>Orion-LD</strong><span>{lang === 'en' ? 'Publish the data' : 'Publicar los datos'}</span></div></li>
+          </ol>
+        </figure>
+        <div class="project-result">
+          <p><strong>≈46 %</strong> {lang === 'en' ? 'lower average resource usage than the average open-source agent in the comparison documented in my CV.' : 'menos consumo medio de recursos frente a la media de agentes de código abierto, en la comparativa recogida en el CV.'}</p>
+          <a href={cvPath(lang)} data-cv-link target="_blank" rel="noopener noreferrer">{lang === 'en' ? 'View in CV' : 'Consultar CV'} <span aria-hidden="true">↗</span></a>
+        </div>
+      </article>
+      <div class="project-grid">
+        <article class="project-card reveal" id="proyecto-xacml" tabindex="-1">
+          <p class="project-index">{lang === 'en' ? '02 / Professional · Odin Solutions' : '02 / Profesional · Odin Solutions'}</p>
+          <div class="project-domain" aria-hidden="true"><span>XACML</span><span>MASTERPIECE</span></div>
+          <h3>{lang === 'en' ? 'XACML policy administration' : 'Administración de políticas XACML'}</h3>
+          <p>{lang === 'en' ? 'A Policy Administration Point for the European MASTERPIECE project. I built the backend component from scratch with Flask and Docker to manage access policies.' : 'Un Punto de Administración de Políticas para el proyecto europeo MASTERPIECE. Desarrollé desde cero el componente backend con Flask y Docker para gestionar las políticas de acceso.'}</p>
+          <ul class="project-stack" aria-label={lang === 'en' ? 'Technologies' : 'Tecnologías'}><li>Python</li><li>Flask</li><li>XACML</li><li>Docker</li></ul>
+        </article>
+        <article class="project-card reveal" id="proyecto-android" tabindex="-1">
+          <p class="project-index">{lang === 'en' ? '03 / Independent open source' : '03 / Open source independiente'}</p>
+          <div class="project-domain" aria-hidden="true"><span>Android 8.1 / 9</span><span>2018</span></div>
+          <h3>{lang === 'en' ? 'Android for the Galaxy Note 3' : 'Android para el Galaxy Note 3'}</h3>
+          <p>{lang === 'en' ? 'I developed and maintained custom Android ROMs for the different Galaxy Note 3 variants, sharing builds with the XDA community. The original 2018 threads are still available.' : 'Desarrollé y mantuve ROMs personalizadas de Android para las distintas variantes del Galaxy Note 3, compartiendo las compilaciones con la comunidad de XDA. Se pueden consultar las publicaciones originales de 2018.'}</p>
+          <div class="project-links">
+            <a href="https://xdaforums.com/t/rom-9-0-hlte-tmo-chn-kor-pixel-experience-aosp-r16-2018-11-19-stopped.3855455/" target="_blank" rel="noopener noreferrer">{lang === 'en' ? 'Android 9 on XDA' : 'Android 9 en XDA'}</a>
+            <a href="https://xdaforums.com/t/rom-8-1-0-hlte-tmo-chn-kor-pixel-experience-aosp-r47-2018-10-15.3827969/" target="_blank" rel="noopener noreferrer">{lang === 'en' ? 'Android 8.1 on XDA' : 'Android 8.1 en XDA'}</a>
+          </div>
+        </article>
+      </div>
+      <article class="project-contribution reveal">
+        <div>
+          <p class="project-index">{lang === 'en' ? 'University community' : 'Comunidad universitaria'}</p>
+          <h3>{lang === 'en' ? 'Faculty of Computer Science Student Delegation' : 'Delegación de Estudiantes de la Facultad de Informática'}</h3>
+          <p>{lang === 'en' ? 'University of Murcia' : 'Universidad de Murcia'}</p>
+        </div>
+        <div class="project-contribution-meta">
+          <span>{lang === 'en' ? 'Social media manager' : 'Gestor de redes sociales'}</span>
+          <span>2020–2022</span>
+        </div>
+      </article>
+    </div>
+  </div>
 </section>

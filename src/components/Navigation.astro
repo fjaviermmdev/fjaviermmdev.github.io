@@ -1,103 +1,106 @@
+---
+import { cvPath, localePath, type Language } from '../lib/i18n';
+interface Props { lang: Language }
+const { lang } = Astro.props;
+const otherLang = lang === 'en' ? 'es' : 'en';
+const links = [
+  { id: 'sobre-mi', es: 'Perfil', en: 'Profile' },
+  { id: 'experiencia', es: 'Experiencia', en: 'Experience' },
+  { id: 'educacion', es: 'Formación', en: 'Education' },
+  { id: 'proyectos', es: 'Proyectos', en: 'Projects' },
+];
+---
 <header class="site-header">
-	<div class="global-nav">
-		<nav class="global-nav-inner" aria-label="Navegación principal" data-aria-en="Main navigation" data-aria-es="Navegación principal">
-			<a class="global-brand" href="#inicio" aria-label="Portfolio, inicio" data-aria-en="Portfolio, home" data-aria-es="Portfolio, inicio">
-				<span>Portfolio</span>
-			</a>
-
-			<div class="nav-links" id="nav-links">
-				<a href="#sobre-mi" data-en="Profile" data-es="Perfil">Perfil</a>
-				<a href="#experiencia" data-en="Experience" data-es="Experiencia">Experiencia</a>
-				<a href="#proyectos" data-en="Projects" data-es="Proyectos">Proyectos</a>
-				<a href="#educacion" data-en="Education" data-es="Formación">Formación</a>
-				<a class="nav-contact-mobile" href="#contacto" data-en="Contact" data-es="Contacto">Contacto</a>
-			</div>
-
-			<div class="global-actions">
-				<button class="language-button" type="button" id="language-button" aria-label="Cambiar idioma" data-aria-en="Change language" data-aria-es="Cambiar idioma">
-					<span class="show-on-es">EN</span>
-					<span class="show-on-en">ES</span>
-				</button>
-				<button class="menu-button" type="button" id="menu-button" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir menú">
-					<span></span><span></span>
-				</button>
-			</div>
-		</nav>
-	</div>
-
-	<div class="local-nav">
-		<div class="local-nav-inner">
-			<a class="local-title" href="#inicio">
-				<strong class="full-name">Francisco Javier Martínez Martínez</strong>
-				<strong class="short-name">Javi</strong>
-				<span data-en="Software engineer" data-es="Ingeniero de software">Ingeniero de software</span>
-			</a>
-			<div class="local-actions">
-				<a class="local-contact" href="#contacto" data-en="Contact" data-es="Contacto">Contacto</a>
-				<a class="local-cv" href="/CV_Javi-ES-public.pdf" data-cv-link target="_blank" rel="noopener noreferrer" data-en="View CV" data-es="Ver CV">Ver CV</a>
-			</div>
-		</div>
-	</div>
+    <nav class="header-inner" aria-label={lang === 'en' ? 'Main navigation' : 'Navegación principal'}>
+      <a class="site-brand" href="#inicio" aria-label={lang === 'en' ? 'Javi, portfolio home' : 'Javi, inicio del portfolio'}><strong>Javi<span aria-hidden="true">.</span></strong><span>Portfolio</span></a>
+      <div class="nav-links">
+        {links.map((link) => <a href={`#${link.id}`} data-section-link>{link[lang]}</a>)}
+      </div>
+      <div class="global-actions">
+        <a class="language-button" href={localePath(otherLang)} lang={otherLang} hreflang={otherLang} data-language-link aria-label={otherLang === 'en' ? 'Read in English' : 'Leer en español'}>{otherLang.toUpperCase()}</a>
+        <a class="header-cv" href={cvPath(lang)} data-cv-link target="_blank" rel="noopener noreferrer">{lang === 'en' ? 'View CV' : 'Ver CV'}<span class="sr-only">{lang === 'en' ? ', PDF, opens in a new tab' : ', PDF, se abre en otra pestaña'}</span></a>
+        <button class="menu-button" type="button" id="menu-button" aria-expanded="false" aria-controls="mobile-menu" aria-haspopup="dialog" aria-label={lang === 'en' ? 'Open menu' : 'Abrir menú'}>
+          <span></span><span></span>
+        </button>
+      </div>
+    </nav>
+  <dialog class="mobile-menu" id="mobile-menu" aria-label={lang === 'en' ? 'Navigation menu' : 'Menú de navegación'}>
+    <div class="mobile-menu-toolbar">
+      <span>Portfolio</span>
+      <button class="menu-close" type="button" aria-label={lang === 'en' ? 'Close menu' : 'Cerrar menú'} autofocus>
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg>
+      </button>
+    </div>
+    <nav class="mobile-menu-links" aria-label={lang === 'en' ? 'Sections' : 'Secciones'}>
+      {links.map((link, index) => <a href={`#${link.id}`}><span aria-hidden="true">0{index + 1}</span>{link[lang]}</a>)}
+      <a href="#contacto"><span aria-hidden="true">05</span>{lang === 'en' ? 'Contact' : 'Contacto'}</a>
+    </nav>
+    <div class="mobile-menu-footer">
+      <a class="button button-primary" href={cvPath(lang)} data-cv-link target="_blank" rel="noopener noreferrer">{lang === 'en' ? 'View CV' : 'Ver CV'}</a>
+      <a href={localePath(otherLang)} lang={otherLang} hreflang={otherLang} data-language-link>{otherLang === 'en' ? 'English' : 'Español'} <span aria-hidden="true">↗</span></a>
+    </div>
+  </dialog>
 </header>
 
 <script>
-	const menuButton = document.getElementById('menu-button');
-	const navLinks = document.getElementById('nav-links');
-	const languageButton = document.getElementById('language-button');
-	const sectionLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.nav-links a'));
-	const getMenuLabel = (isOpen: boolean) => {
-		const english = document.documentElement.lang === 'en';
-		if (isOpen) return english ? 'Close menu' : 'Cerrar menú';
-		return english ? 'Open menu' : 'Abrir menú';
-	};
+  const dialog = document.querySelector<HTMLDialogElement>('#mobile-menu')!;
+  const menuButton = document.querySelector<HTMLButtonElement>('#menu-button')!;
+  const mobile = matchMedia('(max-width: 760px)');
+  let menuDestination: HTMLElement | null = null;
+  if (typeof dialog.showModal === 'function') {
+    document.querySelector('.site-header')?.classList.add('navigation-ready');
+    menuButton.addEventListener('click', () => {
+      menuDestination = null;
+      dialog.showModal();
+      document.body.classList.add('menu-open');
+      menuButton.setAttribute('aria-expanded', 'true');
+    });
+  }
+  dialog.querySelector('.menu-close')?.addEventListener('click', () => dialog.close());
+  dialog.addEventListener('keydown', (event) => {
+    if (event.key !== 'Tab' || event.altKey || event.ctrlKey || event.metaKey) return;
+    // Keep the menu's reading order consistent, including Safari's link-focus preference.
+    const controls = [...dialog.querySelectorAll<HTMLElement>('button, a[href]')];
+    const index = controls.indexOf(document.activeElement as HTMLElement);
+    const next = (index + (event.shiftKey ? -1 : 1) + controls.length) % controls.length;
+    event.preventDefault();
+    controls[next]?.focus();
+  });
+  dialog.addEventListener('close', () => {
+    document.body.classList.remove('menu-open');
+    menuButton.setAttribute('aria-expanded', 'false');
+    const fallback = mobile.matches ? menuButton : document.querySelector<HTMLElement>('[data-section-link]');
+    (menuDestination ?? fallback)?.focus({ preventScroll: true });
+    menuDestination = null;
+  });
+  dialog.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((link) => {
+    link.addEventListener('click', () => {
+      const target = document.getElementById(link.hash.slice(1));
+      if (target) target.tabIndex = -1;
+      menuDestination = target;
+      dialog.close();
+    });
+  });
+  mobile.addEventListener('change', () => { if (!mobile.matches) dialog.close(); });
 
-	function closeMenu() {
-		navLinks?.classList.remove('is-open');
-		menuButton?.setAttribute('aria-expanded', 'false');
-		menuButton?.setAttribute('aria-label', getMenuLabel(false));
-		document.body.classList.remove('menu-open');
-	}
-
-	menuButton?.addEventListener('click', () => {
-		const isOpen = navLinks?.classList.toggle('is-open') ?? false;
-		menuButton.setAttribute('aria-expanded', String(isOpen));
-		menuButton.setAttribute('aria-label', getMenuLabel(isOpen));
-		document.body.classList.toggle('menu-open', isOpen);
-	});
-	document.addEventListener('keydown', (event) => {
-		if (event.key !== 'Escape' || !navLinks?.classList.contains('is-open')) return;
-		closeMenu();
-		menuButton?.focus();
-	});
-	window.addEventListener('resize', () => {
-		if (window.innerWidth > 760) closeMenu();
-	});
-
-	languageButton?.addEventListener('click', () => (window as any).toggleLanguage?.());
-	document.addEventListener('languageChanged', () => {
-		menuButton?.setAttribute('aria-label', getMenuLabel(navLinks?.classList.contains('is-open') ?? false));
-	});
-	sectionLinks.forEach((link) => link.addEventListener('click', closeMenu));
-
-	const sections = sectionLinks
-		.map((link) => document.querySelector<HTMLElement>(link.getAttribute('href') ?? ''))
-		.filter((section): section is HTMLElement => Boolean(section));
-
-	const sectionObserver = new IntersectionObserver(
-		(entries) => {
-			const visible = entries
-				.filter((entry) => entry.isIntersecting)
-				.sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-			if (!visible) return;
-			sectionLinks.forEach((link) => {
-				const active = link.getAttribute('href') === `#${visible.target.id}`;
-				link.classList.toggle('is-active', active);
-				if (active) link.setAttribute('aria-current', 'location');
-				else link.removeAttribute('aria-current');
-			});
-		},
-		{ rootMargin: '-28% 0px -62%', threshold: [0, 0.2] },
-	);
-
-	sections.forEach((section) => sectionObserver.observe(section));
+  const sectionLinks = [...document.querySelectorAll<HTMLAnchorElement>('[data-section-link]')];
+  const sections = sectionLinks.map((link) => document.getElementById(link.hash.slice(1))!);
+  let scheduled = false;
+  function updateActiveSection() {
+    const offset = document.querySelector('.site-header')!.getBoundingClientRect().height + 80;
+    const active = [...sections].reverse().find((section) => section.getBoundingClientRect().top <= offset);
+    const inContact = document.getElementById('contacto')!.getBoundingClientRect().top <= offset;
+    for (const link of sectionLinks) {
+      const current = !inContact && link.hash === `#${active?.id}`;
+      link.classList.toggle('is-active', current);
+      if (current) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    }
+    scheduled = false;
+  }
+  document.addEventListener('scroll', () => {
+    if (!scheduled) { scheduled = true; requestAnimationFrame(updateActiveSection); }
+  }, { passive: true });
+  window.addEventListener('resize', updateActiveSection);
+  updateActiveSection();
 </script>

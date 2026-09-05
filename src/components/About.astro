@@ -1,116 +1,56 @@
 ---
+import type { Language } from '../lib/i18n';
+interface Props { lang: Language }
+const { lang } = Astro.props;
 const skillGroups = [
-	{ es: 'Backend', en: 'Backend', skills: ['Python', 'Java', 'Go', 'Flask', 'FastAPI', 'Django', 'REST APIs', 'SQLAlchemy'] },
-	{ es: 'Datos', en: 'Data', skills: ['PostgreSQL', 'MySQL', 'MongoDB', 'Elasticsearch', 'InfluxDB', 'Big Data'] },
-	{ es: 'Cloud y DevOps', en: 'Cloud and DevOps', skills: ['Docker', 'Kubernetes', 'AWS', 'Jenkins', 'GitHub Actions', 'GitLab', 'NGINX', 'Traefik'] },
-	{ es: 'Seguridad', en: 'Security', skills: ['Cybersecurity', 'Keycloak', 'XACML', 'IAM', 'Pentesting'] },
-	{ es: 'Sistemas', en: 'Systems', skills: ['Linux', 'Bash', 'Microservices', 'Distributed systems', 'MQTT', 'FIWARE'] },
-	{ es: 'Calidad', en: 'Quality', skills: ['PyTest', 'k6', 'Locust', 'Postman', 'OpenAPI'] },
+  { es: 'Backend', en: 'Backend', skills: ['Python', 'Java', 'Go', 'Flask', 'FastAPI', 'Django', 'REST APIs', 'SQLAlchemy'] },
+  { es: 'Datos', en: 'Data', skills: ['PostgreSQL', 'MySQL', 'MongoDB', 'Elasticsearch', 'OpenSearch', 'InfluxDB', 'Big Data'] },
+  { es: 'Cloud y DevOps', en: 'Cloud and DevOps', skills: ['Docker', 'Kubernetes', 'AWS ECS', 'AWS Lambda', 'Amazon S3', 'Jenkins', 'GitHub Actions', 'GitLab', 'NGINX', 'Traefik'] },
+  { es: 'Seguridad', en: 'Security', skills: ['Cybersecurity', 'Keycloak', 'XACML', 'IAM', 'Pentesting'] },
+  { es: 'Sistemas', en: 'Systems', skills: ['Linux', 'Bash', 'Microservices', 'Distributed systems', 'MQTT', 'FIWARE'] },
+  { es: 'Calidad', en: 'Quality', skills: ['PyTest', 'k6', 'Locust', 'Postman', 'OpenAPI'] },
 ];
 ---
-
 <section id="sobre-mi" class="profile-section">
-	<div class="section-shell">
-		<header class="section-heading reveal" data-section="01">
-			<p class="section-eyebrow" data-en="Profile" data-es="Perfil">Perfil</p>
-			<h2 data-en="Backend, infrastructure and security." data-es="Backend, infraestructura y seguridad.">Backend, infraestructura y seguridad.</h2>
-			<p class="section-intro" data-en="I work on backend applications and the systems that support them, with a particular interest in automation, observability and application security." data-es="Trabajo en aplicaciones backend y en los sistemas que las sostienen, con especial interés por la automatización, la observabilidad y la seguridad de las aplicaciones.">Trabajo en aplicaciones backend y en los sistemas que las sostienen, con especial interés por la automatización, la observabilidad y la seguridad de las aplicaciones.</p>
-		</header>
-
-		<div class="profile-story reveal">
-			<div class="profile-statement">
-				<p class="content-label" data-en="How I work" data-es="Cómo trabajo">Cómo trabajo</p>
-				<h3 data-en="I take part in the full lifecycle of a service, from its first design decisions to its operation in production." data-es="Participo en el ciclo completo de un servicio, desde las primeras decisiones de diseño hasta su operación en producción.">Participo en el ciclo completo de un servicio, desde las primeras decisiones de diseño hasta su operación en producción.</h3>
-			</div>
-			<div class="profile-copy">
-				<p data-en="I have worked with APIs, microservices, identity systems, IoT and containerized deployments. This background helps me understand both the application and the infrastructure on which it runs." data-es="He trabajado con APIs, microservicios, sistemas de identidad, IoT y despliegues contenedorizados. Esa experiencia me permite entender tanto la aplicación como la infraestructura sobre la que funciona.">He trabajado con APIs, microservicios, sistemas de identidad, IoT y despliegues contenedorizados. Esa experiencia me permite entender tanto la aplicación como la infraestructura sobre la que funciona.</p>
-				<dl class="working-notes">
-					<div><dt>01</dt><dd data-en="Maintainable code" data-es="Código mantenible">Código mantenible</dd></div>
-					<div><dt>02</dt><dd data-en="Security from the start" data-es="Seguridad desde el inicio">Seguridad desde el inicio</dd></div>
-					<div><dt>03</dt><dd data-en="Production monitoring" data-es="Seguimiento en producción">Seguimiento en producción</dd></div>
-				</dl>
-			</div>
-		</div>
-
-		<div class="stack-panel reveal">
-			<header class="stack-header">
-				<div>
-					<p class="content-label" data-en="Technical profile" data-es="Perfil técnico">Perfil técnico</p>
-					<h3 data-en="Technologies and tools" data-es="Tecnologías y herramientas">Tecnologías y herramientas</h3>
-				</div>
-				<p data-en="Select a category to see the tools I have used." data-es="Selecciona una categoría para ver las herramientas con las que he trabajado.">Selecciona una categoría para ver las herramientas con las que he trabajado.</p>
-			</header>
-
-			<div class="stack-tabs" role="tablist" aria-label="Categorías técnicas" data-aria-en="Technical categories" data-aria-es="Categorías técnicas">
-				{skillGroups.map((group, index) => (
-					<button
-						class:list={['stack-tab', { 'is-active': index === 0 }]}
-						type="button"
-						role="tab"
-						id={`stack-tab-${index}`}
-						aria-controls={`stack-panel-${index}`}
-						aria-selected={index === 0 ? 'true' : 'false'}
-						tabindex={index === 0 ? 0 : -1}
-						data-stack-target={`${index}`}
-						data-en={group.en}
-						data-es={group.es}
-					>
-						{group.es}
-					</button>
-				))}
-			</div>
-
-			<div class="stack-panels">
-				{skillGroups.map((group, index) => (
-					<section
-						class:list={['stack-view', { 'is-active': index === 0 }]}
-						id={`stack-panel-${index}`}
-						role="tabpanel"
-						aria-labelledby={`stack-tab-${index}`}
-						hidden={index !== 0}
-					>
-						<p data-en={group.en} data-es={group.es}>{group.es}</p>
-						<ul>
-							{group.skills.map((skill) => <li>{skill}</li>)}
-						</ul>
-					</section>
-				))}
-			</div>
-		</div>
-	</div>
+  <div class="section-shell">
+    <header class="section-heading reveal" data-section="01">
+      <p class="section-eyebrow">{lang === 'en' ? 'Profile' : 'Perfil'}</p>
+      <h2>{lang === 'en' ? 'Backend, systems and security.' : 'Backend, sistemas y seguridad.'}</h2>
+      <p class="section-intro">{lang === 'en'
+        ? 'I started my professional career in applied research at Odin Solutions, working with IoT and identity systems. Today I develop financial software. Along the way, my work has included writing services, deploying them and diagnosing production issues.'
+        : 'Empecé mi trayectoria profesional en investigación aplicada, trabajando con IoT y sistemas de identidad en Odin Solutions. Ahora desarrollo software financiero. En ese recorrido he trabajado tanto en los servicios como en sus despliegues y en el diagnóstico de incidencias en producción.'}</p>
+    </header>
+    <div class="focus-areas">
+      <article class="focus-area reveal">
+        <span aria-hidden="true">01</span>
+        <h3>{lang === 'en' ? 'Backend development' : 'Desarrollo backend'}</h3>
+        <p>{lang === 'en' ? 'APIs, data integration and automated tests.' : 'APIs, integración de datos y pruebas automáticas.'}</p>
+        <p class="focus-tools">Python · SQL · PyTest</p>
+      </article>
+      <article class="focus-area reveal">
+        <span aria-hidden="true">02</span>
+        <h3>{lang === 'en' ? 'Systems and deployment' : 'Sistemas y despliegues'}</h3>
+        <p>{lang === 'en' ? 'Containers, pipelines and services in production.' : 'Contenedores, pipelines y servicios en producción.'}</p>
+        <p class="focus-tools">AWS · Docker · CI/CD</p>
+      </article>
+      <article class="focus-area reveal">
+        <span aria-hidden="true">03</span>
+        <h3>{lang === 'en' ? 'Application security' : 'Seguridad de aplicaciones'}</h3>
+        <p>{lang === 'en' ? 'Identity, access policies and further study in cybersecurity.' : 'Identidad, políticas de acceso y formación en ciberseguridad.'}</p>
+        <p class="focus-tools">Keycloak · XACML · IAM</p>
+      </article>
+    </div>
+    <details class="skills-details">
+      <summary><span>{lang === 'en' ? 'All technologies and tools' : 'Todas las tecnologías y herramientas'}</span><span class="details-icon" aria-hidden="true">+</span></summary>
+      <p class="skills-context">{lang === 'en' ? 'Tools I have used across professional work, personal projects and studies. Not all belong to the same role or period.' : 'Herramientas que he utilizado en el trabajo, en proyectos propios y durante mi formación. No todas corresponden al mismo puesto o etapa.'}</p>
+    <div class="skills-grid">
+      {skillGroups.map((group, index) => (
+        <section class="skill-group reveal" aria-labelledby={`skill-${index}`}>
+          <h3 id={`skill-${index}`}>{group[lang]}</h3>
+          <ul>{group.skills.map((skill) => <li>{skill}</li>)}</ul>
+        </section>
+      ))}
+    </div>
+    </details>
+  </div>
 </section>
-
-<script>
-	const stackTabs = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-stack-target]'));
-	const stackPanels = Array.from(document.querySelectorAll<HTMLElement>('.stack-view'));
-
-	function selectStackTab(tab: HTMLButtonElement, moveFocus = false) {
-		const target = tab.dataset.stackTarget;
-		stackTabs.forEach((item) => {
-			const selected = item === tab;
-			item.classList.toggle('is-active', selected);
-			item.setAttribute('aria-selected', String(selected));
-			item.tabIndex = selected ? 0 : -1;
-		});
-		stackPanels.forEach((panel, index) => {
-			const selected = `${index}` === target;
-			panel.classList.toggle('is-active', selected);
-			panel.hidden = !selected;
-		});
-		if (moveFocus) tab.focus();
-	}
-
-	stackTabs.forEach((tab, index) => {
-		tab.addEventListener('click', () => selectStackTab(tab));
-		tab.addEventListener('keydown', (event) => {
-			let nextIndex = index;
-			if (event.key === 'ArrowRight') nextIndex = (index + 1) % stackTabs.length;
-			else if (event.key === 'ArrowLeft') nextIndex = (index - 1 + stackTabs.length) % stackTabs.length;
-			else if (event.key === 'Home') nextIndex = 0;
-			else if (event.key === 'End') nextIndex = stackTabs.length - 1;
-			else return;
-			event.preventDefault();
-			selectStackTab(stackTabs[nextIndex], true);
-		});
-	});
-</script>

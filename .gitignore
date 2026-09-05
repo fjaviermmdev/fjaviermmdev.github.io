@@ -6,6 +6,9 @@ dist/
 
 # dependencies
 node_modules/
+.pnpm-store/
+playwright-report/
+test-results/
 
 # logs
 npm-debug.log*

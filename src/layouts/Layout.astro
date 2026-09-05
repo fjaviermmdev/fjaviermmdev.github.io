@@ -1,139 +1,113 @@
 ---
-export interface Props {
-	title?: string;
-	description?: string;
-}
+import { getImage } from 'astro:assets';
+import portrait from '../assets/javi.jpg';
+import { localePath, pageCopy, type Language } from '../lib/i18n';
+import '../styles/gallery-redesign.css';
 
-const {
-	title = 'Javi | Ingeniero de software',
-	description = 'Portfolio de Javi Martínez, ingeniero de software especializado en desarrollo backend y ciberseguridad',
-} = Astro.props;
+interface Props { lang?: Language; title?: string; noindex?: boolean }
+const { lang = 'es', title = pageCopy[lang].title, noindex = false } = Astro.props;
+const { description } = pageCopy[lang];
+const canonical = new URL(localePath(lang), Astro.site);
+const socialPortrait = await getImage({ src: portrait, width: 600, format: 'jpeg' });
+const imageUrl = new URL(socialPortrait.src, Astro.site);
 ---
 
 <!doctype html>
-<html lang="es" data-lang="es">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta name="theme-color" content="#ffffff" />
-		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
-		<link rel="canonical" href="https://fjaviermmdev.github.io/" />
-		<meta name="generator" content={Astro.generator} />
-		<meta
-			name="description"
-			content={description}
-			data-en="Portfolio of Javi Martínez, software engineer specializing in backend development and cybersecurity"
-			data-es="Portfolio de Javi Martínez, ingeniero de software especializado en desarrollo backend y ciberseguridad"
-		/>
-		<meta property="og:type" content="website" />
-		<meta property="og:site_name" content="Portfolio de Javi" />
-		<meta property="og:locale" content="es_ES" />
-		<meta property="og:locale:alternate" content="en_GB" />
-		<meta property="og:url" content="https://fjaviermmdev.github.io/" />
-		<meta property="og:title" content="Javi | Ingeniero de software" />
-		<meta property="og:description" content="Portfolio de Javi Martínez, ingeniero de software especializado en desarrollo backend y ciberseguridad" />
-		<meta property="og:image" content="https://fjaviermmdev.github.io/javi.jpg" />
-		<meta property="og:image:alt" content="Francisco Javier Martínez Martínez en Murcia" />
-		<meta name="twitter:card" content="summary" />
-		<meta name="twitter:title" content="Javi | Ingeniero de software" />
-		<meta name="twitter:description" content="Portfolio de Javi Martínez, ingeniero de software especializado en desarrollo backend y ciberseguridad" />
-		<meta name="twitter:image" content="https://fjaviermmdev.github.io/javi.jpg" />
-		<meta name="robots" content="index, follow" />
-		<script type="application/ld+json" set:html={JSON.stringify({
-			'@context': 'https://schema.org',
-			'@type': 'Person',
-			name: 'Francisco Javier Martínez Martínez',
-			alternateName: 'Javi Martínez',
-			url: 'https://fjaviermmdev.github.io/',
-			image: 'https://fjaviermmdev.github.io/javi.jpg',
-			jobTitle: 'Software Engineering Analyst I',
-			worksFor: { '@type': 'Organization', name: 'Lynx Tech' },
-			alumniOf: { '@type': 'CollegeOrUniversity', name: 'Universidad de Murcia' },
-			sameAs: ['https://linkedin.com/in/fjaviermm', 'https://github.com/fjaviermmdev'],
-			knowsAbout: ['Python', 'Backend development', 'Cybersecurity', 'Cloud computing', 'REST APIs'],
-		})} />
-		<title data-en="Javi | Software engineer" data-es="Javi | Ingeniero de software">{title}</title>
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-		<script is:inline>
-			(() => {
-				const savedLanguage = localStorage.getItem('language');
-				const language = savedLanguage || (navigator.language.startsWith('es') ? 'es' : 'en');
-				document.documentElement.dataset.lang = language;
-				document.documentElement.lang = language;
-			})();
-		</script>
-	</head>
-	<body>
-		<a class="skip-link" href="#contenido" data-en="Skip to content" data-es="Saltar al contenido">Saltar al contenido</a>
-		<slot />
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    {!noindex && <>
+      <link rel="canonical" href={canonical} />
+      <link rel="alternate" hreflang="es" href={new URL('/', Astro.site)} />
+      <link rel="alternate" hreflang="en" href={new URL('/en/', Astro.site)} />
+      <link rel="alternate" hreflang="x-default" href={new URL('/', Astro.site)} />
+    </>}
+    <meta name="description" content={description} />
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow'} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Javi · Portfolio" />
+    <meta property="og:locale" content={lang === 'en' ? 'en_GB' : 'es_ES'} />
+    <meta property="og:locale:alternate" content={lang === 'en' ? 'es_ES' : 'en_GB'} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:alt" content={lang === 'en' ? 'Javi in Murcia' : 'Javi en Murcia'} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+    {!noindex && <script is:inline type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'ProfilePage',
+      url: canonical.href,
+      inLanguage: lang,
+      mainEntity: {
+        '@type': 'Person',
+        '@id': new URL('/#javi', Astro.site).href,
+        name: 'Francisco Javier Martínez Martínez',
+        alternateName: 'Javi',
+        image: imageUrl.href,
+        jobTitle: 'Software Engineering Analyst I',
+        worksFor: { '@type': 'Organization', name: 'Lynx Tech' },
+        alumniOf: { '@type': 'CollegeOrUniversity', name: 'Universidad de Murcia' },
+        sameAs: ['https://linkedin.com/in/fjaviermm', 'https://github.com/fjaviermmdev'],
+      },
+    })} />}
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido">{lang === 'en' ? 'Skip to content' : 'Saltar al contenido'}</a>
+    <slot />
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p>© {new Date().getFullYear()} Francisco Javier Martínez Martínez</p>
+        <p>{lang === 'en' ? 'Murcia, Spain.' : 'Murcia, España.'}</p>
+        <a href={noindex ? '/' : '#inicio'}>{lang === 'en' ? 'Back to top ↑' : 'Volver al inicio ↑'}</a>
+      </div>
+    </footer>
+    <script>
+      // Enhancement only: content is readable without scripts or browser storage.
+      if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const observer = new IntersectionObserver((entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            entry.target.animate(
+              [{ transform: 'translateY(12px)', opacity: 0.7 }, { transform: 'none', opacity: 1 }],
+              { duration: 450, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' },
+            );
+            observer.unobserve(entry.target);
+          }
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal:not(.is-visible)').forEach((element) => observer.observe(element));
+      }
+      document.querySelectorAll<HTMLAnchorElement>('[data-language-link]').forEach((link) => {
+        link.addEventListener('click', () => { link.hash = window.location.hash; });
+      });
 
-		<footer class="site-footer">
-			<div class="footer-inner">
-				<p>© 2026 Francisco Javier Martínez Martínez</p>
-				<p data-en="Murcia, Spain." data-es="Murcia, España.">Murcia, España.</p>
-				<a href="#inicio" data-en="Back to top ↑" data-es="Volver arriba ↑">Volver arriba ↑</a>
-			</div>
-		</footer>
-
-		<script>
-			type Language = 'es' | 'en';
-			const getLanguage = (): Language =>
-				document.documentElement.dataset.lang === 'en' ? 'en' : 'es';
-
-			function updateLanguageContent(language: Language) {
-				document.documentElement.lang = language;
-				document.documentElement.dataset.lang = language;
-				localStorage.setItem('language', language);
-
-				document.querySelectorAll<HTMLElement>('[data-en][data-es]').forEach((element) => {
-					const value = element.dataset[language];
-					if (!value) return;
-
-					if (element instanceof HTMLMetaElement) {
-						element.content = value;
-					} else if (element instanceof HTMLTitleElement) {
-						document.title = value;
-					} else {
-						element.innerHTML = value;
-					}
-				});
-
-				document.querySelectorAll<HTMLElement>('[data-aria-en][data-aria-es]').forEach((element) => {
-					const value = language === 'en' ? element.dataset.ariaEn : element.dataset.ariaEs;
-					if (value) element.setAttribute('aria-label', value);
-				});
-
-				document.querySelectorAll<HTMLAnchorElement>('[data-cv-link]').forEach((link) => {
-					link.href = language === 'en' ? '/CV_Javi-EN-public.pdf' : '/CV_Javi-ES-public.pdf';
-				});
-
-				document.dispatchEvent(new CustomEvent('languageChanged', { detail: language }));
-			}
-
-			function toggleLanguage() {
-				updateLanguageContent(getLanguage() === 'es' ? 'en' : 'es');
-			}
-
-			Object.assign(window, { toggleLanguage, updateLanguageContent });
-
-			document.addEventListener('DOMContentLoaded', () => {
-				updateLanguageContent(getLanguage());
-
-				const revealObserver = new IntersectionObserver(
-					(entries) => {
-						entries.forEach((entry) => {
-							if (!entry.isIntersecting) return;
-							entry.target.classList.add('is-visible');
-							revealObserver.unobserve(entry.target);
-						});
-					},
-					{ threshold: 0.12 },
-				);
-
-				document.querySelectorAll('.reveal').forEach((element) => revealObserver.observe(element));
-			});
-		</script>
-	</body>
+      // WebKit can omit closed disclosures from print even with print CSS.
+      // Remember only the ones we open, so returning to the page preserves its state.
+      let printDetails: HTMLDetailsElement[] | null = null;
+      function expandForPrint() {
+        if (printDetails !== null) return;
+        printDetails = [...document.querySelectorAll<HTMLDetailsElement>('details:not([open])')];
+        for (const detail of printDetails) detail.open = true;
+      }
+      function restoreAfterPrint() {
+        for (const detail of printDetails ?? []) detail.open = false;
+        printDetails = null;
+      }
+      window.addEventListener('beforeprint', expandForPrint);
+      window.addEventListener('afterprint', restoreAfterPrint);
+      const printMedia = matchMedia('print');
+      printMedia.addEventListener('change', (event) => {
+        if (event.matches) expandForPrint();
+        else restoreAfterPrint();
+      });
+      if (printMedia.matches) expandForPrint();
+    </script>
+  </body>
 </html>

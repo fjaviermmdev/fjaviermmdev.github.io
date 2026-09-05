@@ -1,4 +1,7 @@
 ---
+import type { Language } from '../lib/i18n';
+interface Props { lang: Language }
+const { lang } = Astro.props;
 const roles = [
 	{
 		company: 'Lynx Tech',
@@ -7,19 +10,21 @@ const roles = [
 		periodEs: 'Noviembre 2025 — Presente',
 		periodEn: 'November 2025 — Present',
 		current: true,
-		descriptionEs: 'Desarrollo una plataforma de detección AML basada en inteligencia artificial, Big Data y procesamiento en tiempo real para entornos financieros. Mi trabajo se centra en el desarrollo, mantenimiento y optimización de aplicaciones cloud, con participación puntual en el análisis de requisitos y el diseño de soluciones.',
-		descriptionEn: 'I develop an AML detection platform based on artificial intelligence, Big Data and real-time processing for financial environments. My work focuses on the development, maintenance and optimization of cloud applications, with occasional involvement in requirements analysis and solution design.',
+		descriptionEs: 'Desarrollo y mantengo varias APIs y los paquetes propietarios de Python que utilizan, dentro de una plataforma de prevención del blanqueo de capitales (AML). Mi trabajo incluye nuevas funcionalidades, corrección de errores en APIs y paquetes, y despliegues en AWS.',
+		descriptionEn: 'I develop and maintain multiple APIs and the proprietary Python packages they use, within an anti-money laundering (AML) platform. My work includes new features, bug fixes in both APIs and packages, and AWS deployments.',
 		highlightsEs: [
-			'Apoyo puntual en el análisis de requisitos y el diseño de soluciones cloud para entornos financieros.',
-			'Desarrollo y mantenimiento de servicios orientados a detección AML en tiempo real.',
-			'Optimización de rendimiento, testing automático y diagnóstico de incidencias.',
+			'Despliegue de APIs en Amazon Elastic Container Service (ECS).',
+			'Participación en el desarrollo de AWS Lambdas que interactúan con las APIs, y en la lectura y escritura de datos en buckets de S3.',
+			'Desarrollo de dashboards de OpenSearch con los datos almacenados por las APIs.',
+			'Pruebas automáticas, diagnóstico de incidencias y apoyo puntual en el análisis de requisitos y el diseño de soluciones.',
 		],
 		highlightsEn: [
-			'Occasional support in requirements analysis and cloud solution design for financial environments.',
-			'Development and maintenance of real-time AML detection services.',
-			'Performance optimization, automated testing and incident diagnosis.',
+			'API deployments to Amazon Elastic Container Service (ECS).',
+			'Contributing to AWS Lambdas that interact with the APIs, and reading and writing data in S3 buckets.',
+			'Building OpenSearch dashboards using data stored by the APIs.',
+			'Automated tests, incident diagnosis and occasional support in requirements analysis and solution design.',
 		],
-		technologies: ['Python', 'REST APIs', 'Elasticsearch', 'SQL', 'PyTest', 'CI/CD', 'Big Data', 'AI'],
+		technologies: ['Python', 'REST APIs', 'AWS ECS', 'AWS Lambda', 'Amazon S3', 'OpenSearch', 'PyTest', 'CI/CD'],
 	},
 	{
 		company: 'Odin Solutions',
@@ -32,13 +37,15 @@ const roles = [
 		descriptionEn: 'I designed and developed backend solutions for European and national projects. I worked with APIs, microservices, identity, IoT and containerized deployments, as well as pipelines and internal services.',
 		highlightsEs: [
 			'Punto de Administración de Políticas XACML desarrollado desde cero con Flask y Docker para MASTERPIECE.',
-			'Agente MQTT LoRaWAN con aproximadamente un 46 % menos de consumo medio de recursos frente a la media de agentes de código abierto.',
+			'Agente MQTT en Python para decodificar y normalizar datos LoRaWAN y publicarlos en Orion-LD.',
 			'Repositorios Git, pipelines de Jenkins, scripts en Bash y administración de Keycloak.',
+			'Participación en proyectos de I+D+i como UNIMAAS, MAS4CARE, EDS4AGRO y MASTERPIECE.',
 		],
 		highlightsEn: [
 			'XACML Policy Administration Point built from scratch with Flask and Docker for MASTERPIECE.',
-			'MQTT LoRaWAN agent with approximately 46% lower average resource usage than the average open-source agent.',
+			'Python MQTT agent to decode and normalise LoRaWAN data for publication in Orion-LD.',
 			'Git repositories, Jenkins pipelines, Bash scripts and Keycloak administration.',
+			'Participation in R&D projects including UNIMAAS, MAS4CARE, EDS4AGRO and MASTERPIECE.',
 		],
 		technologies: ['Python', 'Java', 'Go', 'Flask', 'Docker', 'Kubernetes', 'Keycloak', 'Jenkins', 'FIWARE', 'MQTT'],
 	},
@@ -48,47 +55,58 @@ const roles = [
 <section id="experiencia" class="experience-section">
 	<div class="section-shell">
 		<header class="section-heading section-heading-on-dark reveal" data-section="02">
-			<p class="section-eyebrow" data-en="Experience" data-es="Experiencia">Experiencia</p>
-			<h2 data-en="Professional experience." data-es="Experiencia profesional.">Experiencia profesional.</h2>
-			<p class="section-intro" data-en="Backend development in financial software, applied research and European technology projects." data-es="Desarrollo backend en software financiero, investigación aplicada y proyectos tecnológicos europeos.">Desarrollo backend en software financiero, investigación aplicada y proyectos tecnológicos europeos.</p>
+			<p class="section-eyebrow">{lang === 'en' ? "Experience" : "Experiencia"}</p>
+			<h2>{lang === 'en' ? "Professional experience." : "Experiencia profesional."}</h2>
 		</header>
 
 		<div class="experience-list">
 			{roles.map((role, index) => (
-				<article class="experience-entry reveal">
+				<article class="experience-entry reveal" id={role.current ? 'lynx-tech' : 'odin-solutions'}>
 					<div class="experience-rail">
 						<span class="entry-index">0{index + 1}</span>
-						<span class="entry-period" data-en={role.periodEn} data-es={role.periodEs}>{role.periodEs}</span>
+						<span class="entry-period">{lang === 'en' ? role.periodEn : role.periodEs}</span>
 					</div>
 					<div class="experience-main">
 						<header>
 							<div class="company-line">
-								<p>{role.company}</p>
-								{role.current && <span class="current-badge" data-en="Current" data-es="Actual">Actual</span>}
+								<h3>{role.company}</h3>
+								{role.current && <span class="current-badge">{lang === 'en' ? "Current" : "Actual"}</span>}
 							</div>
-							<h3 data-en={role.titleEn} data-es={role.titleEs}>{role.titleEs}</h3>
+							<p class="role-title">{lang === 'en' ? role.titleEn : role.titleEs}</p>
 						</header>
 
-						<p class="role-description" data-en={role.descriptionEn} data-es={role.descriptionEs}>{role.descriptionEs}</p>
+						<p class="role-description">{lang === 'en' ? role.descriptionEn : role.descriptionEs}</p>
 
-						<ul class="technology-list" aria-label="Tecnologías" data-aria-en="Technologies" data-aria-es="Tecnologías">
+						<ul class="technology-list" aria-label={lang === 'en' ? "Technologies" : "Tecnologías"}>
 							{role.technologies.map((technology) => <li>{technology}</li>)}
 						</ul>
 
-						<details class="role-details">
+						<details class="role-details" open={role.current}>
 							<summary>
-								<span data-en="More details" data-es="Más detalles">Más detalles</span>
+								<span>{lang === 'en' ? `My work at ${role.company}` : `Mi trabajo en ${role.company}`}</span>
 								<span class="details-icon" aria-hidden="true">+</span>
 							</summary>
 							<ol>
 								{role.highlightsEs.map((highlight, highlightIndex) => (
-									<li data-en={role.highlightsEn[highlightIndex]} data-es={highlight}>{highlight}</li>
+									<li>{lang === 'en' ? role.highlightsEn[highlightIndex] : highlight}</li>
 								))}
 							</ol>
 						</details>
+						{!role.current && <div class="role-project-links">
+							<a href="#proyecto-mqtt">{lang === 'en' ? 'MQTT agent project' : 'Proyecto del agente MQTT'} <span aria-hidden="true">↓</span></a>
+							<a href="#proyecto-xacml">{lang === 'en' ? 'XACML project' : 'Proyecto XACML'} <span aria-hidden="true">↓</span></a>
+						</div>}
 					</div>
 				</article>
 			))}
 		</div>
+		<figure class="recommendation reveal">
+			<figcaption><span>{lang === 'en' ? 'A reference from Odin Solutions' : 'Una referencia de Odin Solutions'}</span><span>José Trigueros · CEO</span><time datetime="2025-11-13">{lang === 'en' ? '13 November 2025' : '13 de noviembre de 2025'}</time></figcaption>
+			<blockquote><p>{lang === 'en' ? '“He has strong analytical skills and a good understanding of the tools and methodologies related to cybersecurity.”' : '«Posee una marcada capacidad analítica y una buena comprensión de las herramientas y metodologías relacionadas con la ciberseguridad.»'}</p></blockquote>
+			<p class="recommendation-note">
+				{lang === 'en' ? 'Excerpt translated from the Spanish original.' : 'Extracto de la carta de recomendación.'}<br />
+				<a href="/Carta-recomendacion-Odin-publica.pdf" target="_blank" rel="noopener noreferrer" type="application/pdf">{lang === 'en' ? 'Read the letter · public copy, PDF in Spanish' : 'Leer la carta · copia pública, PDF'}<span class="sr-only">{lang === 'en' ? ', opens in a new tab' : ', se abre en otra pestaña'}</span></a>
+			</p>
+		</figure>
 	</div>
 </section>

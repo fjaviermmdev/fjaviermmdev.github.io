@@ -1,4 +1,7 @@
 ---
+import type { Language } from '../lib/i18n';
+interface Props { lang: Language }
+const { lang } = Astro.props;
 const education = [
 	{
 		titleEs: 'Máster en Ciberseguridad',
@@ -10,7 +13,6 @@ const education = [
 		statusEn: 'In progress',
 		descriptionEs: 'Especialización en análisis de ciberseguridad, hacking ético, gestión de incidentes, criptografía, seguridad software y gobernanza.',
 		descriptionEn: 'Specialization in cybersecurity analysis, ethical hacking, incident management, cryptography, software security and governance.',
-		topics: ['Ethical hacking', 'Cryptography', 'Cyber intelligence', 'Software security', 'Incident response'],
 	},
 	{
 		titleEs: 'Grado en Ingeniería Informática',
@@ -22,46 +24,40 @@ const education = [
 		statusEn: 'Completed',
 		descriptionEs: 'Formación en desarrollo backend y frontend, sistemas distribuidos, bases de datos, redes, sistemas operativos, cloud y ciberseguridad.',
 		descriptionEn: 'Training in backend and frontend development, distributed systems, databases, networks, operating systems, cloud and cybersecurity.',
-		topics: ['Python', 'Java', 'Linux', 'Networking', 'Databases', 'Distributed systems', 'Cybersecurity'],
 	},
 ];
 ---
 
 <section id="educacion" class="education-section">
 	<div class="section-shell">
-		<header class="section-heading reveal" data-section="04">
-			<p class="section-eyebrow" data-en="Education" data-es="Formación">Formación</p>
-			<h2 data-en="Academic background." data-es="Formación académica.">Formación académica.</h2>
-			<p class="section-intro" data-en="Computer Engineering at the University of Murcia and an ongoing specialization in cybersecurity." data-es="Ingeniería Informática en la Universidad de Murcia y especialización en ciberseguridad actualmente en curso.">Ingeniería Informática en la Universidad de Murcia y especialización en ciberseguridad actualmente en curso.</p>
+		<header class="section-heading reveal" data-section="03">
+			<p class="section-eyebrow">{lang === 'en' ? "Education" : "Formación"}</p>
+			<h2>{lang === 'en' ? "Academic background." : "Formación académica."}</h2>
 		</header>
 
 		<div class="education-grid">
-			{education.map((item, index) => (
-				<article class:list={['education-card', 'reveal', { 'education-card-featured': index === 0 }]}>
+			{education.map((item) => (
+				<article class="education-card reveal">
 					<div class="education-topline">
 						<span class="education-year">{item.period}</span>
-						<span class="education-status" data-en={item.statusEn} data-es={item.statusEs}>{item.statusEs}</span>
+						<span class="education-status">{lang === 'en' ? item.statusEn : item.statusEs}</span>
 					</div>
 					<div class="education-content">
-						<p class="education-institution" data-en={item.institutionEn} data-es={item.institutionEs}>{item.institutionEs}</p>
-						<h3 data-en={item.titleEn} data-es={item.titleEs}>{item.titleEs}</h3>
-						<p class="education-description" data-en={item.descriptionEn} data-es={item.descriptionEs}>{item.descriptionEs}</p>
+						<p class="education-institution">{lang === 'en' ? item.institutionEn : item.institutionEs}</p>
+						<h3>{lang === 'en' ? item.titleEn : item.titleEs}</h3>
+						<p class="education-description">{lang === 'en' ? item.descriptionEn : item.descriptionEs}</p>
 					</div>
-					<ul class="technology-list">
-						{item.topics.map((topic) => <li>{topic}</li>)}
-					</ul>
 				</article>
 			))}
 		</div>
 
 		<div class="languages-strip reveal">
 			<div>
-				<p class="content-label" data-en="Languages" data-es="Idiomas">Idiomas</p>
-				<h3 data-en="Spanish and English" data-es="Español e inglés">Español e inglés</h3>
+				<p class="content-label">{lang === 'en' ? "Languages" : "Idiomas"}</p>
 			</div>
 			<dl class="language-levels">
-				<div><dt data-en="Spanish" data-es="Español">Español</dt><dd data-en="Native" data-es="Nativo">Nativo</dd></div>
-				<div><dt data-en="English" data-es="Inglés">Inglés</dt><dd>B2 Cambridge</dd></div>
+				<div><dt>{lang === 'en' ? "Spanish" : "Español"}</dt><dd>{lang === 'en' ? "Native" : "Nativo"}</dd></div>
+				<div><dt>{lang === 'en' ? "English" : "Inglés"}</dt><dd>B2 Cambridge</dd></div>
 			</dl>
 		</div>
 	</div>
