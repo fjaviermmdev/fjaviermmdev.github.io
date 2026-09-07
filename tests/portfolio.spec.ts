@@ -41,6 +41,9 @@ for (const lang of ['es', 'en'] as const) {
     expect(letter.ok()).toBeTruthy();
     expect((await letter.body()).subarray(0, 5).toString()).toBe('%PDF-');
     await expect(page.locator('#lynx-tech .role-details')).toHaveAttribute('open', '');
+    await expect(page.locator('#lynx-tech .role-details')).toContainText(lang === 'en'
+      ? 'Developing and maintaining AWS Lambda functions'
+      : 'Desarrollo y mantenimiento de funciones AWS Lambda');
     for (const technology of ['AWS ECS', 'AWS Lambda', 'Amazon S3', 'OpenSearch']) {
       await expect(page.locator('#lynx-tech .technology-list')).toContainText(technology);
     }
