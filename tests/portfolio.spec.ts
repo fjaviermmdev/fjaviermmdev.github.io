@@ -27,12 +27,13 @@ for (const lang of ['es', 'en'] as const) {
     await expect(page.locator('.hero-image')).toHaveJSProperty('complete', true);
     expect(await page.locator('.hero-image').evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(0);
     for (const link of await page.locator('[data-cv-link]').all()) {
-      await expect(link).toHaveAttribute('href', `/CV_Javi-${lang.toUpperCase()}-public.pdf`);
+      await expect(link).toHaveAttribute('href', `/CV_Francisco_Javier_Martinez_${lang.toUpperCase()}-public.pdf`);
     }
     for (const pdf of ['ES', 'EN']) {
-      const document = await request.get(`/CV_Javi-${pdf}-public.pdf`);
+      const document = await request.get(`/CV_Francisco_Javier_Martinez_${pdf}-public.pdf`);
       expect(document.ok()).toBeTruthy();
       expect((await document.body()).subarray(0, 5).toString()).toBe('%PDF-');
+      expect(await document.body()).toEqual(await readFile(`public/CV_Francisco_Javier_Martinez_${pdf}-public.pdf`));
     }
     const reference = page.locator('.recommendation a');
     await expect(reference).toHaveAttribute('href', '/Carta-recomendacion-Odin-publica.pdf');
@@ -243,7 +244,7 @@ test('production assets stay within the static-site size budget', async () => {
   expect(styleBytes).toBeLessThan(12_000);
   expect(Buffer.byteLength(html)).toBeLessThan(65_000);
   expect(await readdir('public')).toEqual(expect.arrayContaining([
-    'CV_Javi-ES-public.pdf', 'CV_Javi-EN-public.pdf', 'Carta-recomendacion-Odin-publica.pdf',
+    'CV_Francisco_Javier_Martinez_ES-public.pdf', 'CV_Francisco_Javier_Martinez_EN-public.pdf', 'Carta-recomendacion-Odin-publica.pdf',
   ]));
 });
 

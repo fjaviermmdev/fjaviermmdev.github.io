@@ -1,6 +1,6 @@
 export type Language = 'es' | 'en';
 export const localePath = (lang: Language) => lang === 'en' ? '/en/' : '/';
-export const cvPath = (lang: Language) => `/CV_Javi-${lang.toUpperCase()}-public.pdf`;
+export const cvPath = (lang: Language) => `/CV_Francisco_Javier_Martinez_${lang.toUpperCase()}-public.pdf`;
 export const pageCopy = {
   es: {
     title: 'Javi | Ingeniero de software',
