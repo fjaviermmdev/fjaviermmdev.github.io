@@ -17,6 +17,7 @@ const imageUrl = new URL(socialPortrait.src, Astro.site);
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="no-referrer" />
     <meta name="theme-color" content="#ffffff" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     {!noindex && <>
@@ -56,7 +57,7 @@ const imageUrl = new URL(socialPortrait.src, Astro.site);
         alumniOf: { '@type': 'CollegeOrUniversity', name: 'Universidad de Murcia' },
         sameAs: ['https://linkedin.com/in/fjaviermm', 'https://github.com/fjaviermmdev'],
       },
-    })} />}
+    }).replace(/</g, '\\u003c')} />}
     <title>{title}</title>
   </head>
   <body>

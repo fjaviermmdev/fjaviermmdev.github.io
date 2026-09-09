@@ -53,3 +53,9 @@ La experiencia en Lynx recoge las APIs y paquetes propietarios de Python, ECS, L
 Las herramientas completas usan un desplegable nativo, accesible sin JavaScript. Al imprimir con JavaScript se abren los desplegables y se restaura su estado después; esta mejora cubre el comportamiento de WebKit al imprimir contenido cerrado.
 
 Consulta `docs/audit-2026-09.md` para el alcance y las limitaciones de la revisión.
+
+## Seguridad
+
+La compilación incluye CSP con hashes y una política `no-referrer`. No añadir scripts o servicios externos sin revisar la política. GitHub Actions comprueba avisos de dependencias de severidad alta/crítica; las acciones están fijadas por SHA y Dependabot propone actualizaciones sin fusionarlas automáticamente.
+
+No guardar secretos, informes privados ni documentos con datos personales reservados en el repositorio o en `public/`.
