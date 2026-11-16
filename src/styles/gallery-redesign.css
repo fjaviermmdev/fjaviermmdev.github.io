@@ -160,6 +160,10 @@ body.menu-open { overflow: hidden; }
 .company-line h3 { margin: 0; font-size: clamp(34px, 4vw, 48px); font-weight: 600; line-height: 1.1; letter-spacing: -0.03em; }
 .current-badge { padding: 4px 8px; background: var(--color-tile-dark); border-radius: var(--radius-pill); font-size: 10px; font-weight: 600; text-transform: uppercase; }
 .role-title { margin: 12px 0 0; color: var(--color-primary-on-dark); font-size: 17px; }
+.role-stages { display: grid; gap: 8px; margin: 12px 0 0; }
+.role-stages > div { display: flex; align-items: baseline; flex-wrap: wrap; gap: 2px 12px; }
+.role-stages dt { color: var(--color-primary-on-dark); }
+.role-stages dd { margin: 0; }
 .role-description { max-width: 780px; margin: 24px 0 0; color: var(--color-body-muted); font-size: 17px; }
 .experience-section .technology-list li { color: var(--color-body-muted); }
 .role-details { margin-top: 28px; border-top: 1px solid var(--color-ink-muted); }

@@ -11,7 +11,7 @@ pnpm install
 pnpm dev
 ```
 
-Requiere Node.js 22.12+ y pnpm 10.13.1 (declarado en `package.json`).
+Requiere Node.js 22.23.4+ y pnpm 10.34.9 (declarado en `package.json`).
 
 ## Comandos
 
@@ -48,7 +48,7 @@ GitHub Actions valida tipos, compila y ejecuta las pruebas antes de publicar en 
 
 No añadir métricas, responsabilidades, certificaciones ni herramientas sin confirmación. Las tecnologías generales no implican uso en cada empresa. El dato aproximado del 46 % procede del CV y no es un benchmark público reproducible. Los proyectos de Odin son profesionales; Android es open source independiente; DELFI es participación universitaria.
 
-La experiencia en Lynx recoge las APIs y paquetes propietarios de Python, ECS, Lambda, S3 y OpenSearch confirmados por el propietario. La referencia de Odin enlaza una copia para publicación sin DNI ni bloque de firma digital. El texto de la carta se conserva; el original firmado permanece fuera del repositorio. El extracto inglés está identificado como traducción.
+La experiencia en Lynx recoge el desarrollo backend con Python, APIs y servicios cloud. La referencia de Odin enlaza una copia para publicación sin DNI ni bloque de firma digital. El texto de la carta se conserva; el original firmado permanece fuera del repositorio. El extracto inglés está identificado como traducción.
 
 Las herramientas completas usan un desplegable nativo, accesible sin JavaScript. Al imprimir con JavaScript se abren los desplegables y se restaura su estado después; esta mejora cubre el comportamiento de WebKit al imprimir contenido cerrado.
 

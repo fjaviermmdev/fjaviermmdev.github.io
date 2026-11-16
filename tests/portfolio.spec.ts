@@ -6,6 +6,27 @@ import { gzipSync } from 'node:zlib';
 for (const lang of ['es', 'en'] as const) {
   const path = lang === 'en' ? '/en/' : '/';
 
+  test(`${lang}: professional responsibilities and career stages`, async ({ page }) => {
+    await page.goto(path);
+    const en = lang === 'en';
+    const lynx = page.locator('#lynx-tech');
+    await expect(lynx.locator('.role-title')).toHaveText('Software Engineering Analyst I');
+    await expect(lynx).toContainText(en ? 'I propose acceptance criteria' : 'Propongo criterios de aceptación');
+    const odin = page.locator('#odin-solutions');
+    await expect(odin).toHaveCount(1);
+    const stages = odin.locator('header dl');
+    await expect(stages).toBeVisible();
+    await expect(stages.locator('dt')).toHaveText(en
+      ? ['Junior Researcher', 'Bachelor’s thesis', 'Software development and research internships']
+      : ['Investigador junior', 'Trabajo de fin de grado (TFG)', 'Prácticas de desarrollo e investigación']);
+    await expect(stages.locator('dd')).toHaveText(en
+      ? ['July 2024 to November 2025', 'November 2023 to July 2024', 'February to April and June to August 2023']
+      : ['Julio de 2024 a noviembre de 2025', 'Noviembre de 2023 a julio de 2024', 'Febrero a abril y junio a agosto de 2023']);
+    await expect(page.locator('#proyecto-mqtt .project-kicker')).toContainText(en ? 'Bachelor’s thesis' : 'TFG');
+    await expect(page.locator('#proyecto-xacml .project-index')).toContainText(en ? 'Internship' : 'Prácticas');
+    await expect(page.locator('#educacion')).toContainText(en ? 'highest course distinction, in Distributed Systems' : 'Matrícula de Honor en Sistemas Distribuidos');
+  });
+
   test(`${lang}: static content, SEO, documents and local assets`, async ({ page, request }) => {
     const errors: string[] = [];
     const thirdParty: string[] = [];
@@ -42,12 +63,15 @@ for (const lang of ['es', 'en'] as const) {
     expect(letter.ok()).toBeTruthy();
     expect((await letter.body()).subarray(0, 5).toString()).toBe('%PDF-');
     await expect(page.locator('#lynx-tech .role-details')).toHaveAttribute('open', '');
-    await expect(page.locator('#lynx-tech .role-details')).toContainText(lang === 'en'
-      ? 'Developing and maintaining AWS Lambda functions'
-      : 'Desarrollo y mantenimiento de funciones AWS Lambda');
-    for (const technology of ['AWS ECS', 'AWS Lambda', 'Amazon S3', 'OpenSearch']) {
-      await expect(page.locator('#lynx-tech .technology-list')).toContainText(technology);
-    }
+    const responsibilities = page.locator('#lynx-tech .role-details li');
+    await expect(responsibilities).toHaveCount(4);
+    await expect(responsibilities.nth(0)).toContainText(lang === 'en' ? 'concurrent operations' : 'operaciones concurrentes');
+    await expect(responsibilities.nth(1)).toContainText(lang === 'en' ? 'compatibility' : 'compatibilidad');
+    await expect(responsibilities.nth(2)).toContainText(lang === 'en'
+      ? 'work with other engineers on service integrations'
+      : 'colaboro con otros ingenieros en la integración entre servicios');
+    await expect(responsibilities.nth(3)).toContainText('pytest');
+    await expect(page.locator('#lynx-tech .technology-list li')).toHaveText(['Python', 'REST APIs', 'AWS', 'pytest', 'CI/CD']);
     const missingTargets = await page.locator('a[href^="#"]').evaluateAll((links) => links
       .map((link) => (link as HTMLAnchorElement).hash.slice(1)).filter((id) => !document.getElementById(id)));
     expect(missingTargets).toEqual([]);

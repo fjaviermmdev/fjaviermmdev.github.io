@@ -10,41 +10,42 @@ const roles = [
 		periodEs: 'Noviembre 2025 — Presente',
 		periodEn: 'November 2025 — Present',
 		current: true,
-		descriptionEs: 'Desarrollo y mantengo varias APIs y los paquetes propietarios de Python que utilizan, dentro de una plataforma de prevención del blanqueo de capitales (AML). Mi trabajo incluye nuevas funcionalidades, corrección de errores en APIs y paquetes, y despliegues en AWS.',
-		descriptionEn: 'I develop and maintain multiple APIs and the proprietary Python packages they use, within an anti-money laundering (AML) platform. My work includes new features, bug fixes in both APIs and packages, and AWS deployments.',
+		descriptionEs: 'Desarrollo y mantengo APIs REST y paquetes de Python para software de prevención del blanqueo de capitales (AML). También analizo qué cambios necesita cada nueva funcionalidad en las APIs. Propongo criterios de aceptación y coordino esos cambios con desarrolladores de mi equipo que trabajan en otras especialidades.',
+		descriptionEn: 'I build and maintain REST APIs and Python packages for anti-money laundering (AML) software. I also work out what each new feature needs from the APIs. I propose acceptance criteria and coordinate those changes with developers on my team who specialise in other areas.',
 		highlightsEs: [
-			'Despliegue de APIs en Amazon Elastic Container Service (ECS).',
-			'Desarrollo y mantenimiento de funciones AWS Lambda que interactúan con las APIs e integraciones de lectura y escritura de datos en buckets de Amazon S3.',
-			'Desarrollo de dashboards de OpenSearch con los datos almacenados por las APIs.',
-			'Pruebas automáticas, diagnóstico de incidencias y apoyo puntual en el análisis de requisitos y el diseño de soluciones.',
+			'Diseño modelos de datos, migraciones de esquema y reglas de validación. Al trabajar con operaciones concurrentes, tengo en cuenta cómo mantener la consistencia de los datos.',
+			'Cuando diseño cambios en una API, tengo en cuenta el rendimiento y la compatibilidad con las aplicaciones que ya la utilizan.',
+			'Desarrollo y despliego servicios backend en AWS y colaboro con otros ingenieros en la integración entre servicios.',
+			'Investigo incidencias y escribo pruebas automatizadas y de regresión con pytest. También desarrollo paneles de visualización de datos.',
 		],
 		highlightsEn: [
-			'API deployments to Amazon Elastic Container Service (ECS).',
-			'Developing and maintaining AWS Lambda functions that interact with the APIs, alongside integrations for reading and writing data in Amazon S3 buckets.',
-			'Building OpenSearch dashboards using data stored by the APIs.',
-			'Automated tests, incident diagnosis and occasional support in requirements analysis and solution design.',
+			'I design data models, schema migrations and validation rules. When working with concurrent operations, I consider how to keep the data consistent.',
+			'When I design API changes, I consider performance and compatibility with applications that already use the API.',
+			'I develop and deploy backend services on AWS and work with other engineers on service integrations.',
+			'I investigate issues and write automated tests, including regression tests, with pytest. I also build dashboards to visualise data.',
 		],
-		technologies: ['Python', 'REST APIs', 'AWS ECS', 'AWS Lambda', 'Amazon S3', 'OpenSearch', 'PyTest', 'CI/CD'],
+		technologies: ['Python', 'REST APIs', 'AWS', 'pytest', 'CI/CD'],
 	},
 	{
 		company: 'Odin Solutions',
-		titleEs: 'Investigador junior',
-		titleEn: 'Junior Researcher',
-		periodEs: 'Febrero 2023 — Noviembre 2025',
-		periodEn: 'February 2023 — November 2025',
+		stages: [
+			{ es: ['Investigador junior', 'Julio de 2024 a noviembre de 2025'], en: ['Junior Researcher', 'July 2024 to November 2025'] },
+			{ es: ['Trabajo de fin de grado (TFG)', 'Noviembre de 2023 a julio de 2024'], en: ['Bachelor’s thesis', 'November 2023 to July 2024'] },
+			{ es: ['Prácticas de desarrollo e investigación', 'Febrero a abril y junio a agosto de 2023'], en: ['Software development and research internships', 'February to April and June to August 2023'] },
+		],
 		current: false,
 		descriptionEs: 'Diseño y desarrollo de soluciones backend para proyectos europeos y nacionales. Trabajé con APIs, microservicios, identidad, IoT y despliegues contenedorizados, además de administrar pipelines y servicios internos.',
 		descriptionEn: 'I designed and developed backend solutions for European and national projects. I worked with APIs, microservices, identity, IoT and containerized deployments, as well as pipelines and internal services.',
 		highlightsEs: [
-			'Punto de Administración de Políticas XACML desarrollado desde cero con Flask y Docker para MASTERPIECE.',
-			'Agente MQTT en Python para decodificar y normalizar datos LoRaWAN y publicarlos en Orion-LD.',
-			'Repositorios Git, pipelines de Jenkins, scripts en Bash y administración de Keycloak.',
+			'Como investigador junior, desarrollé y mantuve APIs y servicios en Python, Java y Go. Trabajé con repositorios Git, pipelines de Jenkins, scripts en Bash y autenticación con Keycloak.',
+			'En el TFG desarrollé un agente MQTT en Python para normalizar datos LoRaWAN y publicarlos en Orion-LD. También amplié el servicio de ingesta y la API de consulta para incorporar InfluxDB.',
+			'Durante las prácticas implementé desde cero un punto de administración de políticas XACML con Flask y Docker para MASTERPIECE. También desarrollé la ingesta de notificaciones de Orion-LD en Elasticsearch y una API de consulta.',
 			'Participación en proyectos de I+D+i como UNIMAAS, MAS4CARE, EDS4AGRO y MASTERPIECE.',
 		],
 		highlightsEn: [
-			'XACML Policy Administration Point built from scratch with Flask and Docker for MASTERPIECE.',
-			'Python MQTT agent to decode and normalise LoRaWAN data for publication in Orion-LD.',
-			'Git repositories, Jenkins pipelines, Bash scripts and Keycloak administration.',
+			'As a junior researcher, I developed and maintained APIs and services in Python, Java and Go. I also worked with Git repositories, Jenkins pipelines, Bash scripts and authentication with Keycloak.',
+			'For my thesis, I built a Python MQTT agent to normalise LoRaWAN data and publish it to Orion-LD. I also extended the ingestion service and query API to support InfluxDB.',
+			'During my internships, I built an XACML Policy Administration Point from scratch with Flask and Docker for MASTERPIECE. I also developed a service to ingest Orion-LD notifications into Elasticsearch and an API to query the data.',
 			'Participation in R&D projects including UNIMAAS, MAS4CARE, EDS4AGRO and MASTERPIECE.',
 		],
 		technologies: ['Python', 'Java', 'Go', 'Flask', 'Docker', 'Kubernetes', 'Keycloak', 'Jenkins', 'FIWARE', 'MQTT'],
@@ -64,7 +65,7 @@ const roles = [
 				<article class="experience-entry reveal" id={role.current ? 'lynx-tech' : 'odin-solutions'}>
 					<div class="experience-rail">
 						<span class="entry-index">0{index + 1}</span>
-						<span class="entry-period">{lang === 'en' ? role.periodEn : role.periodEs}</span>
+						{!role.stages && <span class="entry-period">{lang === 'en' ? role.periodEn : role.periodEs}</span>}
 					</div>
 					<div class="experience-main">
 						<header>
@@ -72,7 +73,13 @@ const roles = [
 								<h3>{role.company}</h3>
 								{role.current && <span class="current-badge">{lang === 'en' ? "Current" : "Actual"}</span>}
 							</div>
-							<p class="role-title">{lang === 'en' ? role.titleEn : role.titleEs}</p>
+							{role.stages ? (
+								<dl class="role-stages">
+									{role.stages.map((stage) => (
+										<div><dt>{stage[lang][0]}</dt><dd class="entry-period">{stage[lang][1]}</dd></div>
+									))}
+								</dl>
+							) : <p class="role-title">{lang === 'en' ? role.titleEn : role.titleEs}</p>}
 						</header>
 
 						<p class="role-description">{lang === 'en' ? role.descriptionEn : role.descriptionEs}</p>
